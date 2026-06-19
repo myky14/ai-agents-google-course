@@ -54,7 +54,7 @@ The first exercise serves as a verification portal to validate that the local de
 
 ### Verification Screenshot
 
-![Hello Flask App Verification](file:///F:/Studyspace/AI_Agents_5_Day_Google/day02/screenshots/hello-flask-app.png)
+![Hello Flask App Verification](screenshots/hello-flask-app.png)
 
 ---
 
@@ -70,7 +70,7 @@ This project is a feature-rich analytics dashboard that acts as a real-time moni
 
 ### Dashboard Interface Screenshot
 
-![BigQuery Release Tracker Dashboard](file:///F:/Studyspace/AI_Agents_5_Day_Google/day02/screenshots/bigquery-release-tracker.png)
+![BigQuery Release Tracker Dashboard](screenshots/bigquery-release-tracker.png)
 
 ---
 
