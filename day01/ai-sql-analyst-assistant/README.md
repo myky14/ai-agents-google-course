@@ -5,21 +5,12 @@ The **AI SQL Analyst Assistant** is an intelligent web application designed to b
 Live Demo:
 https://ai-sql-analyst-assistant-567449380471.asia-southeast1.run.app
 
+> [!WARNING]
+> ⚠️ This demo may be temporarily unavailable if the Cloud Run service has been unpublished or suspended after course completion.
+
 ---
 
 ## Application Preview
-
-<!-- TODO: Replace the image below with a full-screen screenshot of the application homepage showing:
-* Header
-* Input workspace
-* Output workspace
-* Modern dashboard layout
-
-Suggested filename: images/app-overview.png
--->
-
-> [!NOTE]
-> **TODO:** Replace the image below with a full-screen screenshot of the application homepage showing the header, input workspace, output workspace, and modern dashboard layout.
 
 ![Application Overview](images/app-overview.png)
 
@@ -61,33 +52,17 @@ In many organizations, extracting data insights requires database technical know
 
 ## Example Workflow
 
-<!-- TODO: Replace the image below with a screenshot showing:
-* Business Question
-* Generated SQL
-* Explanation section
-* Business Insight section
-
-Suggested filename: images/sql-analysis-example.png
--->
-
-> [!NOTE]
-> **TODO:** Replace the image below with a screenshot showing the business question, generated SQL, explanation section, and business insight section in action.
-
 ![SQL Analysis Example](images/sql-analysis-example.png)
 
-### The Step-by-Step Flow:
-```mermaid
-graph TD
-    A[Business Question] --> B[Schema Analysis]
-    B --> C[SQL Generation]
-    C --> D[Business Insight Synthesis]
-    D --> E[Visualization Recommendation]
-```
-1.  **Business Question:** The user inputs a conversational business inquiry (e.g., *"Find the top 5 customers by revenue trend"*).
-2.  **Schema Analysis:** Gemini reads the user's custom database schema layout and verifies table/column constraints.
-3.  **SQL Generation:** The assistant writes the dialect-specific SQL query adhering strictly to the schema structure.
-4.  **Business Insight:** The model details the business reasoning, critical KPIs, and decision impact.
-5.  **Visualization Recommendation:** An interactive chart preview is rendered based on visual-type suggestions and simulated output tables.
+### Step-by-Step Flow
+
+1. User provides a database schema.
+2. User submits a business question.
+3. Gemini analyzes the schema and requirements.
+4. SQL is generated.
+5. Query logic is explained.
+6. Business insights are generated.
+7. Visualization recommendations are suggested.
 
 ---
 
@@ -183,14 +158,3 @@ Open your browser and visit [http://localhost:3000](http://localhost:3000).
     *   *Business Information Systems Student*
     *   *Data Analytics Enthusiast*
     *   *Accounting Assistant*
-
----
-
-## Screenshot Checklist
-
-*   [ ] **Application Overview Screenshot**
-    *   *Instructions:* Open the deployed application homepage and capture the entire interface.
-    *   *Suggested filename:* `images/app-overview.png`
-*   [ ] **SQL Analysis Example Screenshot**
-    *   *Instructions:* Run a sample query on one of the database presets and capture the Business Question, SQL Output, Business Insight, and Visualization Recommendation sections.
-    *   *Suggested filename:* `images/sql-analysis-example.png`
