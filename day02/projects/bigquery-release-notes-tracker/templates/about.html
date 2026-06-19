@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - BigQuery Release Notes Tracker</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="shortcut icon" href="https://www.gstatic.com/images/branding/product/1x/bigquery_64dp.png" type="image/png">
+</head>
+<body>
+    <div class="app-container about-page-layout">
+        <!-- Sidebar/Left Column: Header & Navigation -->
+        <aside class="sidebar">
+            <div class="brand-section">
+                <div class="logo-container">
+                    <svg class="logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/>
+                    </svg>
+                    <h1>BigQuery</h1>
+                </div>
+                <p class="subtitle">Release Notes Tracker</p>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="nav-card">
+                <a href="/" class="nav-link">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Feed Dashboard</span>
+                </a>
+                <a href="/about" class="nav-link active">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span>About Tracker</span>
+                </a>
+            </div>
+
+            <div class="help-card">
+                <h3>External Resources</h3>
+                <div class="external-links-list">
+                    <a href="https://cloud.google.com/bigquery" target="_blank" class="about-external-link">BigQuery Product Page &rarr;</a>
+                    <a href="https://cloud.google.com/bigquery/docs/release-notes" target="_blank" class="about-external-link">Official Release Notes &rarr;</a>
+                    <a href="https://docs.cloud.google.com/feeds/bigquery-release-notes.xml" target="_blank" class="about-external-link">RSS Feed XML &rarr;</a>
+                </div>
+            </div>
+
+            <footer class="app-footer">
+                <p>Built with <span class="footer-brand">Antigravity CLI</span></p>
+            </footer>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="feed-header">
+                <div class="header-titles">
+                    <h2>About the Application</h2>
+                    <p>Information on design, features, and technology stack</p>
+                </div>
+                <div>
+                    <a href="/" class="btn btn-primary btn-sm">
+                        &larr; Back to Dashboard
+                    </a>
+                </div>
+            </header>
+
+            <div class="feed-container about-content-container">
+                <!-- Info Section 1: Overview -->
+                <section class="about-section">
+                    <h3 class="about-section-title">Overview</h3>
+                    <p class="about-p">
+                        The <strong>BigQuery Release Notes Tracker</strong> is a specialized analytics dashboard designed for engineers, architects, and developers who rely on Google Cloud BigQuery. By aggregating, parsing, and filtering official release announcements, this application provides an interactive way to stay informed and share critical cloud updates with the broader community.
+                    </p>
+                </section>
+
+                <!-- Info Section 2: Features Grid -->
+                <section class="about-section">
+                    <h3 class="about-section-title">Key Features</h3>
+                    <div class="about-grid">
+                        <div class="about-feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                                </svg>
+                            </div>
+                            <h4>Automatic Fetching & Caching</h4>
+                            <p>Parses the live RSS feed dynamically. Cached in memory for 5 minutes to prevent redundant network requests and improve load performance.</p>
+                        </div>
+                        <div class="about-feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 9h16M4 15h16"></path>
+                                </svg>
+                            </div>
+                            <h4>Granular Feed Parsing</h4>
+                            <p>Breaks down standard daily feed summaries into distinct blocks based on categories (Features, Announcements, Issues, Deprecations) to view details individually.</p>
+                        </div>
+                        <div class="about-feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                </svg>
+                            </div>
+                            <h4>Custom Tweet Composer</h4>
+                            <p>Select multiple notes to assemble tweets dynamically. Features multiple styles (Bullet lists, minimal layout) and real-time Twitter length tracking.</p>
+                        </div>
+                        <div class="about-feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </div>
+                            <h4>Search & Filter</h4>
+                            <p>Real-time filtering of dates, content, and titles as you type, combined with quick category toggle selectors.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Info Section 3: Architecture & Tech Stack -->
+                <section class="about-section">
+                    <h3 class="about-section-title">Technology Stack</h3>
+                    <div class="tech-list">
+                        <div class="tech-item">
+                            <div class="tech-header">
+                                <span class="tech-badge backend">Backend</span>
+                                <strong>Python & Flask</strong>
+                            </div>
+                            <p>Lightweight routing engine that manages cache, handles connection timeouts, and exposes clean JSON feeds to the browser client.</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-header">
+                                <span class="tech-badge parser">Parsing</span>
+                                <strong>BeautifulSoup4 & Feedparser</strong>
+                            </div>
+                            <p>Enables structural XML traversal and parses rich inline HTML strings to segment code snippets, anchors, and update metadata cleanly.</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-header">
+                                <span class="tech-badge styling">Styling</span>
+                                <strong>Vanilla CSS3 Grids & Variables</strong>
+                            </div>
+                            <p>Custom glassmorphic interface utilizing CSS Grid/Flexbox layouts, native variables for centralized theme configurations, and custom media queries for mobile views.</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-header">
+                                <span class="tech-badge interactive">Logic</span>
+                                <strong>Vanilla ES6 Javascript</strong>
+                            </div>
+                            <p>Handles real-time search indexing, state selections, template string interpolation, dynamic progress counts, and custom mobile pane transitions.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
