@@ -1,4 +1,10 @@
 .venv/
 .env
-__pycache__/
+**/.env
+node_modules/
+dist/
+build/
+.next/
+**pycache**/
 *.pyc
+.DS_Store

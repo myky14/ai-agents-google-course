@@ -1,0 +1,8 @@
+{
+  "name": "AI SQL Analyst Assistant",
+  "description": "An interactive playground that translates business questions into expert SQL queries, explanations, business insights, assumptions, and clean visual mockups.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

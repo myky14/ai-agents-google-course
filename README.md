@@ -1,113 +1,121 @@
 # 🤖 Google 5-Day AI Agents Intensive Course Workspace
 
-Welcome to your workspace for the **Google 5-Day AI Agents Intensive Course** (often referred to as the *Intensive Vibe Coding Course*). This repository is structured to organize your daily codelabs, concepts, personal notes, and capstone project as you learn to build, evaluate, and deploy production-ready agentic systems using Google Gemini.
+Welcome to my portfolio workspace for the **Google 5-Day AI Agents Intensive Course**. This repository contains hands-on projects, study notes, and the capstone project developed to master autonomous, reliable, and stateful AI agents using the Google Gemini ecosystem.
 
 ---
 
-## 🎯 Course Overview & Purpose
+## 📊 Course Progress & Daily Projects
 
-The goal of this course is to transition from basic prompt engineering and simple LLM API calls to building fully autonomous, reliable, and stateful AI agents. You will explore modern agentic patterns, tools discovery, session persistence, and production evaluation.
-
-### 📅 Daily Curriculum Structure
-
-*   **[day01](file:///F:/Studyspace/AI_Agents_5_Day_Google/day01/) - Introduction to Agents & Agentic Workflows**
-    *   *Focus:* Foundational concepts, taxonomy of agent capabilities, and how agentic design differs from standard LLM applications. Understanding "Agent Ops" and security.
-*   **[day02](file:///F:/Studyspace/AI_Agents_5_Day_Google/day02/) - Agent Tools & Interoperability (MCP)**
-    *   *Focus:* Connecting agents to external tools, APIs, and databases. In-depth focus on the **Model Context Protocol (MCP)** for standardized tool discovery and execution.
-*   **[day03](file:///F:/Studyspace/AI_Agents_5_Day_Google/day03/) - Context Engineering: Sessions & Memory**
-    *   *Focus:* Managing short-term and long-term memory. Implementing session states and context retention over multi-turn interactions.
-*   **[day04](file:///F:/Studyspace/AI_Agents_5_Day_Google/day04/) - Agent Quality & Evaluation**
-    *   *Focus:* Measuring performance, reliability, and accuracy. Learn best practices for testing, debugging, and optimizing agent outputs under production-grade scenarios.
-*   **[day05](file:///F:/Studyspace/AI_Agents_5_Day_Google/day05/) - Prototype to Production**
-    *   *Focus:* Deploying, scaling, and observing agents in the real world. Moving agents from a local sandbox to live environments.
-*   **[capstone](file:///F:/Studyspace/AI_Agents_5_Day_Google/capstone/) - Capstone Project**
-    *   *Focus:* Applying all learnings from Days 1-5 to build and showcase a custom, real-world AI agent application.
-*   **[notes](file:///F:/Studyspace/AI_Agents_5_Day_Google/notes/) - Personal Study Notes**
-    *   *Focus:* Scratchpads, conceptual diagrams, summaries, and links to external resources (such as Kaggle Learn notebooks).
+| Day | Project Name | Description | Status | Demo Link |
+| :--- | :--- | :--- | :---: | :---: |
+| **Day 1** | **AI SQL Analyst Assistant** | Natural Language to SQL converter with automated insights & charts. | 🚀 Completed | [Live Demo](https://ai-sql-analyst-assistant-567449380471.asia-southeast1.run.app) |
+| **Day 2** | *Agent Tools & MCP* | Connecting agents to external resources and APIs via Model Context Protocol. | ⏳ Upcoming | - |
+| **Day 3** | *Sessions & Memory* | Short/long-term persistence & context management in multi-turn interactions. | ⏳ Upcoming | - |
+| **Day 4** | *Quality & Evaluation* | Evaluation frameworks, performance testing, and agent alignment. | ⏳ Upcoming | - |
+| **Day 5** | *Prototype to Production* | Deploying, monitoring, and scaling agents in production environments. | ⏳ Upcoming | - |
+| **Capstone**| *Stateful Agent Application*| Comprehensive real-world production-grade agent implementation. | ⏳ Upcoming | - |
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Day 1 Project: AI SQL Analyst Assistant
 
-This project utilizes the following technologies:
-*   **Language:** Python 3.10+
-*   **SDK:** [Google GenAI SDK](https://github.com/googleapis/python-genai) (`google-genai`) for interacting with Gemini models
-*   **UI Framework:** [Streamlit](https://streamlit.io/) for fast prototyping of agent interfaces
-*   **Models:** `gemini-2.5-flash` (or newer models supported in the SDK)
-*   **Environment management:** `dotenv` for securing credentials
+The **AI SQL Analyst Assistant** is an intelligent assistant designed to streamline database analytics. It enables users—ranging from non-technical business leaders to busy data engineers—to query databases using plain language. 
 
----
+*   **Live Demo:** [https://ai-sql-analyst-assistant-567449380471.asia-southeast1.run.app](https://ai-sql-analyst-assistant-567449380471.asia-southeast1.run.app)
+*   **Location:** [`day01/ai-sql-analyst-assistant`](file:///F:/Studyspace/AI_Agents_5_Day_Google/day01/ai-sql-analyst-assistant/)
 
-## 🚀 Setup & Installation Instructions
+### 🎯 Purpose
+Connecting databases to business intelligence workflows can be a bottleneck. This project uses Gemini's advanced semantic understanding to instantly translate questions to clean, optimized, dialect-specific SQL, explain the generated queries step-by-step, draft business insights, highlight structural assumptions, and dynamically render interactive preview dashboards.
 
-Follow these steps to set up your local development environment:
+### ✨ Key Features
+*   **Multi-Dialect Support:** Tailor SQL output for PostgreSQL, MySQL, BigQuery, Snowflake, SQLite, Spark SQL, and SQL Server.
+*   **Interactive Dashboard Preview:** Automatically maps output metrics to the best visualization type (Bar, Line, Area, or Pie chart) with realistic mock dataset generation.
+*   **Detailed Explanations:** Breaks down the generated SQL syntax step-by-step for educational review and debugging.
+*   **Strategic Business Insights:** Interprets data outputs to provide actionable business implications and KPI advice.
+*   **Limitation & Assumption Tracking:** Outlines schema assumptions, missing parameters, and structural index advice transparently.
 
-### 1. Prerequisites
-Ensure you have **Python 3.10** or higher installed. You can check your version by running:
-```bash
-python --version
-```
-
-### 2. Set Up Virtual Environment
-Create and activate a Python virtual environment to keep dependencies isolated:
-
-*   **Create environment:**
-    ```bash
-    python -m venv .venv
-    ```
-
-*   **Activate environment:**
-    *   **Windows (PowerShell):**
-        ```powershell
-        .venv\Scripts\Activate.ps1
-        ```
-    *   **Windows (CMD):**
-        ```cmd
-        .venv\Scripts\activate.bat
-        ```
-    *   **macOS / Linux:**
-        ```bash
-        source .venv/bin/activate
-        ```
-
-### 3. Install Dependencies
-Install all package requirements, including the Google GenAI SDK and Streamlit:
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Configure Environment Variables
-You need a Google Gemini API Key. If you do not have one, generate it at [Google AI Studio](https://aistudio.google.com/).
-
-1. Create a `.env` file in the root of the project:
-   ```text
-   GEMINI_API_KEY=your_actual_api_key_here
-   ```
-2. The code in this workspace automatically loads this variable or looks for it in your environment.
-
-### 5. Verify Setup
-Run the included test script to verify that your SDK installation can successfully call the Gemini API:
-```bash
-python test_gemini.py
-```
-This script queries the `gemini-2.5-flash` model and prints a response explaining AI agents.
+### 🛠️ Tech Stack
+*   **Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, Lucide React (Icons), Motion (Animations)
+*   **Backend:** Node.js, Express, `dotenv`
+*   **AI Engine:** Google GenAI SDK (`@google/genai`) powered by the **`gemini-3.5-flash`** model (leveraging Structured JSON Outputs)
 
 ---
 
 ## 📂 Project Repository Tree
 
 ```text
-├── .venv/                  # Virtual environment folder (ignored by git)
-├── capstone/               # Capstone project code and materials
+├── .venv/                  # Python virtual environment folder (ignored)
+├── capstone/               # Capstone project workspace (upcoming)
 ├── day01/                  # Day 1: Introduction to Agents & Agentic Workflows
+│   └── ai-sql-analyst-assistant/
+│       ├── src/            # React client source files (App.tsx, components)
+│       ├── index.html      # HTML entrypoint
+│       ├── package.json    # Node dependencies and build scripts
+│       ├── server.ts       # Express server & Gemini API integration
+│       ├── tsconfig.json   # TypeScript configuration
+│       ├── vite.config.ts  # Vite build configurations
+│       └── .env.example    # Template for local environment setup
 ├── day02/                  # Day 2: Agent Tools & Interoperability (MCP)
 ├── day03/                  # Day 3: Context Engineering: Sessions & Memory
 ├── day04/                  # Day 4: Agent Quality & Evaluation
 ├── day05/                  # Day 5: Prototype to Production
 ├── notes/                  # Course notes, references, and scratchpads
-├── .env                    # Environment variables (private, ignored by git)
-├── .gitignore              # Files and folders ignored by git
-├── README.md               # Project documentation (this file)
-├── requirements.txt        # Python dependency requirements
-└── test_gemini.py          # Quick setup verification script
+├── .gitignore              # Configured Git ignore patterns
+├── README.md               # Main repository documentation (this file)
+├── requirements.txt        # Python dependency requirements for general workspace scripts
+└── test_gemini.py          # Quick workspace SDK connectivity test script
 ```
+
+---
+
+## 🛠️ General Workspace Setup & Installation
+
+### Prerequisites
+*   **Python 3.10+** (for python scripts)
+*   **Node.js 18+** (for frontend applications)
+
+### 1. Workspace Virtual Environment (Python)
+To configure python scripts and test environments in the workspace root:
+```bash
+python -m venv .venv
+# Activate on Windows (PowerShell):
+.venv\Scripts\Activate.ps1
+# Activate on macOS/Linux:
+source .venv/bin/activate
+
+# Install dependencies:
+pip install -r requirements.txt
+```
+
+### 2. Configure Environment Variables
+You need a Google Gemini API Key. If you do not have one, generate it at [Google AI Studio](https://aistudio.google.com/).
+
+Create a `.env` file in the root directory:
+```env
+GEMINI_API_KEY=your_actual_api_key_here
+```
+
+### 3. Verify Local API Connectivity
+```bash
+python test_gemini.py
+```
+
+---
+
+## 🖥️ Running Day 1 Project Locally
+
+Navigate to the project folder and start the dev server:
+
+```bash
+cd day01/ai-sql-analyst-assistant
+npm install
+cp .env.example .env
+# Edit .env and paste your GEMINI_API_KEY
+npm run dev
+```
+Open your browser to `http://localhost:3000` to interact with the assistant.
+
+---
+
+> [!IMPORTANT]
+> **Security Note:** Never commit your actual `.env` file or expose your API keys in any public workspace. Both the root and sub-project `.gitignore` profiles are strictly configured to prevent sensitive files from being pushed to Git.
