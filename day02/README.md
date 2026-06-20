@@ -1,111 +1,171 @@
-# Google Antigravity AI Agents: CLI & Web Dashboard Integration
+# Google Antigravity AI Agents: CLI & MCP Tool Integration
 
-This repository showcases interactive projects and foundational architectural concepts explored during Day 2 of the Google AI Agents program. The exercises demonstrate how autonomous developer agents integrate with command-line interfaces, manage external data streams, and build responsive web tools.
-
----
-
-## 💡 What I Learned
-
-* **Orchestrating Parallel Agent Services**: Designed and hosted concurrent local web servers (Flask) to validate agent communication channels and port mappings.
-* **Streamlining Real-time XML Ingestion**: Integrated automated data collection pipelines that fetch, filter, and cache RSS feed data using rate-limiting mitigation rules.
-* **Applying Agent UI Integrations**: Designed client-side social draft builders that validate text lengths dynamically to enhance user-facing workflows.
-* **Understanding Agent Protocol Architectures**: Learned the standard protocol framework (MCP, A2A, A2UI, AP2, and UCP) that will shape machine-to-machine transactions and data queries in next-generation AI platforms.
+This repository showcases interactive projects, tools development, and foundational protocol architectures explored during Day 2 of the Google AI Agents program. The exercises demonstrate the setup and usage of the Antigravity CLI and the Model Context Protocol (MCP) to access Google Developer Knowledge.
 
 ---
 
-## 📂 Repository Folder Structure
+## 🎯 Day 2 Overview
 
-```text
-day02/
-├── agy-cli-projects/
-│   ├── bq-releases-notes/
-│   │   ├── app.py                # BigQuery Release Dashboard and RSS parser
-│   │   ├── hello_app.py          # Verification web portal (Port 5001)
-│   │   ├── static/
-│   │   │   ├── css/styles.css    # Custom dark-mode glassmorphic styling
-│   │   │   └── js/app.js         # Interactive search, filters, & Twitter intent composer
-│   │   └── templates/
-│   │       ├── about.html        # Information page portal
-│   │       └── index.html        # Main dashboard home template
-│   ├── news.txt                  # Raw news text file used in CLI tasks
-│   └── summary.txt               # AI-summarized output of news text
-└── screenshots/
-    ├── hello-flask-app.png       # Hello Flask UI verification output
-    ├── bigquery-release-tracker.png # BigQuery Release Dashboard interface
-    └── artifact-review.png       # TUI/IDE Artifact review checkpoint UI
-```
+Day 2 focuses on extending agent capabilities beyond isolated chat loops by integrating command-line interfaces and standardized protocols to access live system state, official document indexes, and external tool suites. 
+
+### Core Codelabs Completed:
+1.  **Getting Started with Antigravity CLI:** Workspace authentication, secure execution sandboxes, agent TUI visualization, and artifact approval workflows.
+2.  **Google Developer Knowledge MCP Server:** Integration with Google's remote Model Context Protocol endpoint to query authoritative cloud documentation and automate cloud actions.
 
 ---
 
-## 🛠️ Antigravity CLI (`agy`) Setup
+## 🛠️ Codelab 1 – Antigravity CLI (`agy`)
 
-The **Antigravity CLI (`agy`)** acts as the agentic control terminal for the workspace. 
+The **Antigravity CLI (`agy`)** serves as the developer agentic control interface for workspace orchestrations.
 
-* **Getting Started**: Initializing `agy` kicks off an OAuth flow to authenticate directly with a Google account, establishing a secure workspace session.
-* **TUI Execution**: The CLI enables direct command execution, planning visualization, and context tracing inside a secure sandbox environment.
+*   **OAuth Authentication:** Integrates direct Google OAuth verification for secure user session initialization.
+*   **Secure Sandboxing:** Commands are parsed and executed within a trusted virtual environment to prevent unauthorized local system mutations.
+*   **Artifact Review System:** Supports human-in-the-loop validation of generated code artifacts prior to system changes.
 
----
-
-## 🚀 Exercise 1: Hello from Antigravity CLI
-
-The first exercise serves as a verification portal to validate that the local development server connects correctly with the agent environment on an isolated port (`5001`).
-
-* **Outcome**: A minimalist, high-speed Python Flask application that receives requests and returns confirmation data, proving the agent's ability to provision and boot running web services locally.
-
-### Verification Screenshot
+### Hello from Antigravity CLI
+A verification exercise establishing a local Flask microservice on port `5001` to test secure agent-to-environment connectivity.
 
 ![Hello Flask App Verification](screenshots/hello-flask-app.png)
 
----
-
-## 📊 Exercise 2: BigQuery Release Notes Tracker
-
-This project is a feature-rich analytics dashboard that acts as a real-time monitor for Google Cloud's BigQuery system updates.
-
-* **Outcome**: An interactive, dark-mode dashboard configured to run on port `5000`. It consolidates official Google Cloud release streams, groups them dynamically, and provides social draft utilities.
-* **Key Features**:
-  * **Categorized Updates**: Parses release descriptions and groups them into clean status categories (Features, Announcements, Deprecations, and Issues) for quick scanning.
-  * **Real-time Live Sync**: Features a cache-busting sync mechanism to pull down-to-the-minute release feed items.
-  * **Interactive Tweet Composer**: A dedicated tool allowing developers to select release notes via checkboxes, auto-compile a social media post, track character limit constraints, and launch an X/Twitter web intent instantly.
-
-### Dashboard Interface Screenshot
+### BigQuery Release Notes Tracker
+A dark-mode analytics dashboard (running on port `5000`) designed to monitor BigQuery updates in real-time. It groups releases dynamically (Features, Deprecations, Issues) and features an interactive tweet compiler with character tracking for social sharing.
 
 ![BigQuery Release Tracker Dashboard](screenshots/bigquery-release-tracker.png)
 
 ---
 
+## 🔌 Codelab 2 – Google Developer Knowledge MCP
+
+Connecting AI models directly to static indexes leads to outdated guidance. The **Model Context Protocol (MCP)** standardizes how agents interact with external data sources and developer tools.
+
+### What is MCP?
+MCP is an open standard that acts as a universal context connector (the "USB-C port" of AI context). It provides a unified protocol for agents to query local and remote databases, retrieve documentation, execute terminal actions, and interface with APIs securely.
+
+### Why MCP Matters for AI Agents
+Rather than developing fragile, custom API integrations for every tools suite, agents utilizing MCP can discover, inspect, and invoke tools dynamically. This separation of concerns lets agents execute complex operations while maintaining strict host control.
+
+### Model Knowledge vs. MCP-powered Retrieval
+*   **Model Knowledge:** Static, frozen at the model's training cutoff date. It struggles with API version updates, deprecations, and newly released libraries.
+*   **MCP-powered Retrieval:** Dynamic and authoritative. Using tools like `search_documents`, the agent retrieves up-to-date, official documentation directly from Google's Developer Knowledge index at runtime.
+
+### Screenshot – Google Developer Knowledge MCP
+
+![Google Developer Knowledge MCP](screenshots/mcp-document-ai-accounting.png)
+
+*Using the Google Developer Knowledge MCP server to retrieve official Google Cloud documentation and generate accounting automation guidance based on authoritative sources.*
+
+---
+
+## 💼 Practical MCP Example: Document AI for Invoice Processing
+
+A real-world business application researched and designed using the Google Developer Knowledge MCP server is an automated accounting pipeline:
+
+```text
+[Invoice Ingestion] 
+       ↓
+[Document AI Extraction] (Extracts invoice_id, vendor, total_amount, tax)
+       ↓
+[Human-in-the-Loop Review] (Flags anomalies or low confidence scores)
+       ↓
+[ERP Integration] (Pushes structured data to SAP, Oracle, or QuickBooks)
+       ↓
+[BigQuery Analytics] (Runs financial forecasting and spend audits)
+```
+
+### Core Architecture Stages:
+*   **Invoice Ingestion:** Scans incoming documents from Google Drive folders or email attachments.
+*   **Document AI Extraction:** Processes PDFs using pre-trained Google Document AI processors (Invoice Parser) to extract key-value fields such as supplier names, invoice dates, line items, and totals.
+*   **Human-in-the-Loop Review:** Routes extractions with low confidence scores or discrepancy flags to a verification dashboard for manual validation.
+*   **ERP Integration:** Pushes audited, structured accounting data directly to Enterprise Resource Planning (ERP) ledgers.
+*   **BigQuery Analytics:** Streams data into BigQuery for real-time cost auditing, tax reporting, and historical trend analysis.
+
+---
+
 ## 🧬 Google Antigravity Agent Protocol Stack
 
-Antigravity operates on five core open protocols designed to move AI agents beyond basic chat tools and into autonomous, action-oriented systems:
+The Antigravity ecosystem operates on a standard suite of five open protocols to enable autonomous machine-to-machine transactions and services:
 
-### System Interaction Flow
-1. **User** interacts with the **Agent-to-User Interface (A2UI)** dashboard.
-2. The UI communicates with the **Antigravity Agent**.
-3. The Agent queries **Model Context Protocol (MCP)** tools and databases.
-4. The Agent collaborates with external merchant agents via **Agent-to-Agent (A2A)** protocols.
-5. Secure transactions are completed using **Agent Payments (AP2)** and the **Universal Commerce Protocol (UCP)**.
+1.  **A2UI (Agent-to-User Interface):** Dynamically renders native, interactive dashboard widgets and visualization metrics directly to users.
+2.  **A2A (Agent-to-Agent):** Standardizes cross-agent discovery and collaboration workflows.
+3.  **MCP (Model Context Protocol):** Provides standardized context retrieval, filesystem access, and API executions.
+4.  **AP2 (Agent Payments):** Enforces spending rules, budget authorization checks, and cryptographically signed audit logs.
+5.  **UCP (Universal Commerce Protocol):** Standardizes shopping, checkout, and inventory verification in machine-to-machine marketplaces.
+
+---
+
+## 💡 Key Takeaways from Day 2
+
+*   **Plan Before Action:** Standardizing execution planning before modifying workspace files prevents configuration errors.
+*   **External Interoperability:** Integrating MCP changes agents from text predictors into action-oriented systems.
+*   **Authoritative Documentation Access:** Accessing official search indexes on-demand prevents AI hallucinations and ensures API compatibility.
+*   **Interoperable Power:** Standardizing protocols (A2A, MCP, A2UI) enables seamless agent delegation.
+*   **Human Verification:** Maintaining human-in-the-loop authorization gates remains critical for safety and system integrity.
 
 ---
 
-### 1. MCP (Model Context Protocol)
-* **What it is**: A standard connection protocol for data sources and developer tools.
-* **Significance**: MCP acts as a universal adapter (the "USB-C port" of AI context). It allows the agent to securely query local databases, read code repositories, and invoke terminals without requiring custom, brittle API integrations.
+## 📂 Project Structure
 
-### 2. A2A (Agent-to-Agent Protocol)
-* **What it is**: An interoperability standard for cross-agent communication.
-* **Significance**: Standardizes how different AI agents discover one another, negotiate tasks, and pass structured instructions. This allows a generalist developer agent to delegate specialized sub-tasks to other helper agents.
-
-### 3. A2UI (Agent-to-User Interface Protocol)
-* **What it is**: A system for agents to render native, interactive UI components directly to the user.
-* **Significance**: Enables the agent to deliver dynamic screens, visual progress meters, and dashboard widgets instead of static text blocks, resulting in an interactive developer experience.
-
-### 4. AP2 (Agent Payments Protocol)
-* **What it is**: A secure transaction and authorization layer for AI.
-* **Significance**: Establishes spending rules, authorization request pathways, and cryptographically signed audit logs. This allows agents to pay for cloud resources or purchase dependencies under strict, user-defined budgets.
-
-### 5. UCP (Universal Commerce Protocol)
-* **What it is**: A commerce framework for machine-to-machine checkout processes.
-* **Significance**: Standardizes cart configuration, checkout stages, and inventory verification. It allows agents to purchase software licenses or developer assets directly from multiple online catalogs.
+```text
+day02/
+├── projects/
+│   ├── bigquery-release-notes-tracker/
+│   │   ├── app.py                # Flask release dashboard & parser
+│   │   ├── hello_app.py          # Verification web portal (Port 5001)
+│   │   ├── static/               # Client styling and interaction logic
+│   │   └── templates/            # HTML structural pages
+│   ├── news.txt                  # Raw news text file used in CLI tasks
+│   └── summary.txt               # AI-summarized output of news text
+├── screenshots/
+│   ├── hello-flask-app.png       # Hello Flask UI verification output
+│   ├── bigquery-release-tracker.png # BigQuery Release Dashboard interface
+│   ├── artifact-review.png       # TUI/IDE Artifact review checkpoint UI
+│   └── mcp-document-ai-accounting.png # MCP tool usage output
+├── upload_to_drive.py            # Google Drive upload script generated via MCP
+└── README.md                     # Project documentation (this file)
+```
 
 ---
-*Developed under the Google DeepMind Advanced Agentic Coding course.*
+
+## 🖥️ Local Setup
+
+### 1. Install Dependencies
+Ensure you have Python 3.10+ installed. Install the Python requirements inside a virtual environment:
+```bash
+cd projects/bigquery-release-notes-tracker
+python -m venv .venv
+source .venv/bin/activate  # Or `.venv\Scripts\activate` on Windows
+pip install -r requirements.txt
+```
+
+### 2. Run the Projects
+To run the BigQuery Release Tracker:
+```bash
+python app.py
+```
+To run the Hello microservice:
+```bash
+python hello_app.py
+```
+
+### 3. Environment Configuration
+Ensure your environment has access to credentials:
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+---
+
+## 🔮 Future Improvements
+
+*   **Automated Document AI Processor Management:** Enable the agent to create and configure Document AI processors dynamically via MCP.
+*   **Bi-directional ERP Syncing:** Implement writeback adapters to confirm invoice entry updates in ERP platforms.
+*   **Production Deployment:** Containerize the Flask dashboards and deploy to Cloud Run with Identity-Aware Proxy (IAP) protections.
+
+---
+
+## 👤 Author
+
+**Nguyen Du My Ky**  
+*   Business Information Systems Student  
+*   Data Analytics Enthusiast  
+*   Accounting Assistant  
