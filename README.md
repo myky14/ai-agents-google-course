@@ -6,12 +6,12 @@ Welcome to my portfolio workspace for the **Google 5-Day AI Agents Intensive Cou
 
 ## 🎯 Course Roadmap & Progress
 
-*   ✅ Day 1 Complete (Introduction to Agents & Vibe Coding)
-*   ✅ Day 2 Complete (Agent Tools & Interoperability)
-*   ✅ Day 3 Complete (Agent Skills)
-*   ⏳ Day 4 Pending (Agent Quality & Evaluation)
-*   ⏳ Day 5 Pending (Prototype to Production)
-*   ⏳ Capstone Project Pending (Stateful Agent Application)
+*   ✅ Day 1 Completed
+*   ✅ Day 2 Completed
+*   ✅ Day 3 Completed
+*   ⏳ Day 4 Pending
+*   ⏳ Day 5 Pending
+*   ⏳ Capstone Pending
 
 ---
 
@@ -39,16 +39,15 @@ Welcome to my portfolio workspace for the **Google 5-Day AI Agents Intensive Cou
 *   **Model Context Protocol (MCP):** Configured the remote `google-developer-knowledge` MCP server to query up-to-date Google Cloud docs, generate automated drive upload scripts, and design an end-to-end Document AI billing pipeline.
 *   **Tech Stack:** Python 3.10+, Flask, RSS/XML parsing, Google API client library, and Model Context Protocol (MCP).
 
-### 🛠️ Day 3: Agent Skills
+### 🛠️ Day 3: Agent Skills & Graph Workflows
 
-Explored how Agent Skills enable reusable expertise through structured folders, references, examples, and workflow orchestration.
+Explored how Agent Skills enable reusable developer workflows, and built a graph workflow using the Agents CLI and ADK 2.0.
 
 *   **Location:** [`day03/`](day03/)
-*   **Skills Completed:**
-    *   `git-commit-formatter`: Pure instructions-based commit formatting.
-    *   `license-header-adder`: Reference-based dynamic license injection.
-    *   `json-to-pydantic`: Few-shot-based raw JSON mapping to Pydantic classes.
-    *   `database-schema-validator`: Workflow orchestration-based multi-step SQL validator.
+*   **Key Achievements:**
+    *   Completed the 4 levels of Agent Skills: `git-commit-formatter`, `license-header-adder`, `json-to-pydantic`, and `database-schema-validator`.
+    *   Scaffolded and built `customer-support-agent` using ADK 2.0 Graph Workflow.
+    *   Verified conditional routing (shipping FAQ agent vs. decline node) in the local ADK Playground.
 *   **Key Concepts:** Context Rot, Progressive Disclosure, Few-Shot Learning, Workflow Orchestration, Reusable Agent Capabilities.
 
 ---
@@ -96,6 +95,7 @@ Explored how Agent Skills enable reusable expertise through structured folders, 
 │   └── README.md               # Day 2 portfolio documentation
 ├── day03/                      # Day 3: Agent Skills & Modular Design
 │   ├── .agents/skills/         # Installed agent skills (levels 1-4)
+│   ├── customer-support-agent/ # ADK 2.0 customer support graph agent
 │   ├── screenshots/            # Verification screenshots
 │   ├── bad_schema.sql          # Test SQL schema for Level 4 validator
 │   ├── my_script.py            # Script injected with Level 2 license header

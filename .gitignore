@@ -1,11 +1,16 @@
 .venv/
+**/.venv/
 .env
 **/.env
 node_modules/
 dist/
 build/
 .next/
+**/__pycache__/
 **pycache**/
 *.pyc
 .DS_Store
 .vscode/
+**/.adk/
+**/.google-agents-cli/
+*.log

@@ -1,204 +1,162 @@
-# Google Antigravity AI Agents: Agent Skills
+# Google AI Agents: Agent Skills & Graph Workflows (Day 3)
 
-This repository showcases the projects, tools development, and design patterns explored during **Day 3** of the Google AI Agents program, focusing on building and using **Agent Skills** within the Antigravity ecosystem.
+This repository documents my progress, projects, and key architectural patterns explored on **Day 3** of the Google AI Agents program. Today's work focused on building modular **Agent Skills** and orchestrating **Graph Workflows** using the Agent Development Kit (ADK) 2.0.
 
 ### 📊 Day 3 Progress
-*   ✅ Level 1 – Instruction Pattern
-*   ✅ Level 2 – Reference Pattern
-*   ✅ Level 3 – Few-Shot Pattern
-*   ✅ Level 4 – Workflow Orchestration (Completed)
+*   ✅ **Codelab 1: Agent Skills**
+    *   ✅ Level 1 – Instruction Pattern (`git-commit-formatter`)
+    *   ✅ Level 2 – Reference Pattern (`license-header-adder`)
+    *   ✅ Level 3 – Few-Shot Pattern (`json-to-pydantic`)
+    *   ✅ Level 4 – Workflow Orchestration (`database-schema-validator`)
+    *   ✅ Installed Agents CLI Skills & Weather Assistant Prototype
+*   ✅ **Codelab 2: Agents CLI & ADK 2.0**
+    *   ✅ Created `customer-support-agent` using ADK 2.0 Graph Workflow
+    *   ✅ Configured local running with `GEMINI_API_KEY` (decoupled GCP ADC)
+    *   ✅ Verified routing logic for shipping queries vs unrelated queries
+    *   ✅ Tested real-time hot reload behavior in the ADK Playground
+*   ⏳ **Day 4 Pending**
+*   ⏳ **Day 5 Pending**
+*   ⏳ **Capstone Pending**
 
 ---
 
-## 🎯 Day 3 Overview & Purpose
+## 🎯 Day 3 Overview
 
-**Agent Skills** represent a key architectural design pattern for building scalable, reliable, and domain-specialized AI systems.
-
-### Why Skills Exist
-AI agents are generalists by default. However, in production environments, generalist behavior often leads to unpredictability, formatting errors, or rule violations. **Skills** solve this by packaging specialized behavior, instructions, templates, few-shot learning examples, and validation scripts into reusable, self-contained directories. This allows the agent to route specific natural language requests to tailored workflows, guaranteeing consistent, domain-specific outputs.
-
-### Difference between Skills and MCP (Model Context Protocol)
-*   **Model Context Protocol (MCP):** Acts as the standardized connection mechanism (the "USB-C port" of AI context) that allows an agent to access external tools, services, and databases (e.g., querying Google Developer Knowledge, reading databases, or writing files).
-*   **Agent Skills:** Represent encapsulated *behavior, instructions, and cognitive workflows* (e.g., formatting commits, injecting licenses). MCP connects the agent to **what** it can access and do, while Skills dictate **how** the agent processes tasks.
-
-### Reducing Context Overload & Context Rot
-Carrying a massive, monolithic system prompt containing instructions for every possible tool and coding rule rapidly consumes the LLM's context window. This leads to **Context Overload** (increased latency and token costs) and **Context Rot** (where the model hallucinates or ignores rules due to attention degradation).
-
-Skills mitigate this through **Progressive Disclosure**. Because skills are structured as modular directories, instructions are loaded **only when the specific skill is activated** by a matching natural language intent. This keeps the active context window lightweight, clean, and highly focused on the task at hand.
+Today's core objective was moving from single-prompt LLM interactions to modular, reusable agent components. We built **Agent Skills**—specialized behaviors packaged with instructions, references, examples, and tools—and integrated them into structured **Graph Workflows** using ADK 2.0 to handle real-world business routing.
 
 ---
 
-## 📈 Agent Skills Progression
+## 🧠 Key Concepts
 
-The skill architecture progresses through levels of increasing design sophistication:
-
-*   **Level 1: Instructions** (e.g., `git-commit-formatter`) ➔ Pure instructions-based behavior. The agent follows explicit directives.
-*   **Level 2: References** (e.g., `license-header-adder`) ➔ Resource isolation. The agent reads external templates, dynamically converting or injecting content on-demand.
-*   **Level 3: Examples** (e.g., `json-to-pydantic`) ➔ Few-shot learning. The agent infers transformation patterns from positive examples instead of relying on long text instructions.
-*   **Level 4: Workflow Orchestration** (e.g., `database-schema-validator`) ➔ Scripted/algorithmic multi-step procedures. The agent coordinates tool calls, runs external scripts, parses output, and handles remediation workflows.
-
-As we scale from Level 1 to Level 4, the agent transitions from static instruction-following to intelligent reasoning and multi-tool orchestration, enabling robust automation of complex engineering standards.
+*   **Agent Skills**: Encapsulated directories holding a `SKILL.md` instruction file, template resources, examples, and validation scripts. They turn prompt engineering into structured developer workflows.
+*   **Context Overload & Context Rot**: As system prompts grow with too many rules, model latency increases (Context Overload) and the LLM's instruction-following degrades (Context Rot).
+*   **Progressive Disclosure**: Loading instructions, examples, and resources dynamically only when the matching skill is triggered. This keeps the LLM's active context window lightweight and focused.
+*   **Agent Development Kit (ADK)**: Google's Python framework that provides structure for building production-ready, multi-agent, and tool-augmented applications.
+*   **Agents CLI**: Command-line interface (`agents-cli`) that automates scaffolding, local testing, validation, and deployment of ADK agents.
+*   **Graph Workflow**: Graph-based execution model where nodes do work, edges define connections, and conditional routing is guided by event states.
 
 ---
 
-## 🛠️ Level 1 – Instruction Pattern
+## 🛠️ Codelab 1: Agent Skills
 
-### `git-commit-formatter`
-*   **Concept:** Pure instruction-based specialization.
-*   **Implementation:** The skill contains reusable commit formatting instructions inside a declarative `SKILL.md` file. When the developer requests a git commit, the agent automatically intercepts the request, runs a git diff, formats the change as a Conventional Commit (e.g., `feat(auth): ...`), and executes the commit.
-*   **Takeaway:** This demonstrates how specific behavior can be packaged into reusable Skills rather than overloading the agent's main system prompt.
+We developed and verified a four-level progression of agent skills to enforce development standards:
 
-### Conventional Commit Generation
-The agent successfully intercepted code modifications and generated a Conventional Commit message following Git best practices.
+### Level 1: Instruction Pattern (`git-commit-formatter`)
+*   **Concept**: Direct instruction enforcement.
+*   **Implementation**: Instructs the agent to analyze `git diff` and format changes as Conventional Commits.
+*   **Verification**: Generated and recorded clean, standard commit history in the repo.
 
-![Conventional Commit](screenshots/skill-conventional-commit.png)
+### Level 2: Reference Pattern (`license-header-adder`)
+*   **Concept**: Resource isolation using external assets.
+*   **Implementation**: Moves large comment headers into a separate template file (`resources/HEADER_TEMPLATE.txt`) and dynamically converts/prepends them to new source files based on the target programming language.
+*   **Benefit**: Saves context window space by only loading templates when needed.
 
-*Caption: The git-commit-formatter skill generated a Conventional Commit message following Git best practices.*
+### Level 3: Few-Shot Pattern (`json-to-pydantic`)
+*   **Concept**: Guiding LLM transformations through input-output examples.
+*   **Implementation**: Provides JSON-to-Pydantic mappings inside `examples/` for the model to study, enabling accurate type inferences (e.g., mapping `null` to `Optional[...]`).
+*   **Benefit**: Concrete examples resolve format ambiguity better than text instructions.
 
-### Git Log Verification
-Verifying the repository history confirms that the Conventional Commit was successfully recorded.
-
-![Git Log Verification](screenshots/skill-git-log-verification.png)
-
-*Caption: Verification of repository history after applying the skill-generated commit workflow.*
-
----
-
-## 🛠️ Level 2 – Reference Pattern
-
-### `license-header-adder`
-*   **Concept:** Specialization using external asset utilization.
-*   **Implementation:** Instead of embedding large templates inside instructions, the skill loads external reference content from `resources/HEADER_TEMPLATE.txt`. The agent reads the template, dynamically converts the block syntax to the target language-specific comment style (e.g., `#` for Python), and prepends it to the newly created source file.
-*   **Takeaway:** This demonstrates **Progressive Disclosure** in action. Large static content is isolated in a separate resource folder and only loaded by the agent when required, preserving the model's active context window.
-
-### License Header Injection
-The skill retrieved a reusable template and automatically prepended the converted Python comment header to a newly created file.
-
-![License Header Adder](screenshots/skill-license-header-adder.png)
-
-*Caption: The license-header-adder skill retrieved a reusable license template and automatically inserted the appropriate Python comment header into a newly created source file.*
+### Level 4: Workflow Orchestration (`database-schema-validator`)
+*   **Concept**: Algorithmic multi-step execution.
+*   **Implementation**: Runs a schema check script, parses the errors, identifies SQL policy violations (such as `DROP TABLE` statements or missing primary keys), and returns structured remediation suggestions to the user.
 
 ---
 
-## 🛠️ Level 3 – Few-Shot Pattern
+## 🤖 Codelab 2: Agents CLI & ADK 2.0
 
-### `json-to-pydantic`
-*   **Concept:** Example-based learning rather than relying solely on written instructions (Few-Shot Pattern).
-*   **Implementation:** The skill's `examples/` folder contains a pairing of `input_data.json` and `output_model.py`. The agent learns the desired transformation pattern by studying this example pair.
-*   **Workflow:**
-    `JSON Input` ➔ `Example Reference` ➔ `Type Inference` ➔ `Pydantic Model Generation`
-*   **Key Concepts:**
-    *   **Few-Shot Learning:** Guiding agent behavior through concrete examples.
-    *   **Pattern Matching:** Aligning inputs and outputs to discern transformation rules.
-    *   **Type Inference:** Determining appropriate Python types from JSON values.
-    *   **Structured Code Generation:** Creating clean, syntactically valid Pydantic models automatically.
+We built a prototype **`customer-support-agent`** using ADK 2.0's Graph Workflow engine.
 
-### Practical Example Summary
-The [product.json](file:///f:/Studyspace/AI_Agents_5_Day_Google/day03/product.json) file containing raw JSON data:
-```json
-{
-  "product": "Widget",
-  "cost": 10.99,
-  "stock": null
-}
+### Project Scaffolding
+Scaffolded a clean local prototype:
+```bash
+uvx google-agents-cli scaffold create customer-support-agent --agent adk --prototype
 ```
-was successfully transformed into a strongly typed Pydantic model in [product_model.py](file:///f:/Studyspace/AI_Agents_5_Day_Google/day03/product_model.py).
+This created a directory layout containing:
+*   `app/agent.py`: Graph definition and node functions.
+*   `app/fast_api_app.py`: FastAPI server integration.
+*   `pyproject.toml`: Dependency and script management.
 
-**Key Transformations Highlighted:**
-*   **`string` ➔ `str`**: The product name field was typed as a string.
-*   **`number` ➔ `float`**: The cost field was mapped to a float.
-*   **`null` ➔ `Optional[...]`**: The stock field (null) was correctly resolved as optional (mapped to `Optional[int] = None`).
-*   **Automatic Class Generation**: A complete Pydantic model class was generated with correct imports.
+### [agent.py](file:///f:/Studyspace/AI_Agents_5_Day_Google/day03/customer-support-agent/app/agent.py) Structure
 
-### JSON to Pydantic Conversion
-The `json-to-pydantic` skill converted raw JSON data into a strongly typed Pydantic model by following example-based patterns stored within the skill.
-
-![JSON to Pydantic](screenshots/skill-json-to-pydantic.png)
-
-*Caption: The json-to-pydantic skill converted raw JSON data into a strongly typed Pydantic model by following example-based patterns stored within the skill.*
-
----
-
-## 🛠️ Level 4 – Workflow Orchestration Pattern
-
-### `database-schema-validator`
-*   **Concept:** Scripted/algorithmic multi-step procedures (Workflow Orchestration Pattern).
-*   **Implementation:** Unlike simple instruction-based skills, this pattern orchestrates a multi-step verification and reasoning workflow. The agent dynamically loads rules, invokes an external Python validation tool against the user's schema, interprets the execution output, and formats actionable errors/suggested fixes.
-*   **Workflow:**
-    ```mermaid
-    flowchart LR
-        A[Schema File] --> B[Validation Rules]
-        B --> C[Policy Checks]
-        C --> D[Error Detection]
-        D --> E[Suggested Fixes]
+*   **Nodes**: Functions or LLM agents executing work.
+    1.  `start_processing`: Stores the user's initial query in context state.
+    2.  `classifier_agent`: An `LlmAgent` using a Pydantic schema to output if the query is shipping-related.
+    3.  `route_query`: Inspects the classification result and determines routing.
+    4.  `shipping_faq_agent`: Answers shipping FAQs with high enthusiasm and emojis.
+    5.  `decline_to_answer`: Declines unrelated questions politely.
+*   **Edges & Root Workflow**: Connected via `Workflow` using a `RoutingMap` dictionary:
+    ```python
+    edges=[
+        ('START', start_processing),
+        (start_processing, classifier_agent),
+        (classifier_agent, route_query),
+        (route_query, {
+            "shipping": shipping_faq_agent,
+            "__DEFAULT__": decline_to_answer,
+        }),
+    ]
     ```
 
-### Validation Results & Engineering Significance
-In our test execution against `bad_schema.sql`, the validator detected three distinct policy violations:
-1.  **Forbidden `DROP TABLE` Statement:** The file contained `DROP TABLE IF EXISTS legacy_users;`. 
-    *   *Why it matters:* In production databases, accidental table drops can cause catastrophic data loss. Automated schema validation prevents destructive commands from executing during migrations.
-2.  **Naming Convention Violation:** The table `userProfile` violated the `snake_case` rule.
-    *   *Why it matters:* Consistent naming standards (e.g., lowercase snake_case) ensure database portability across different SQL engines and ease integration with Object-Relational Mappers (ORMs).
-3.  **Missing Primary Key:** The `posts` table was defined without an `id` column or PRIMARY KEY.
-    *   *Why it matters:* Primary keys are fundamental for indexing, maintaining relational integrity, and enabling efficient queries. Omitting them degrades query performance and violates standard relational design rules.
+### Local Playgrounds and Hot Reloading
+*   **ADK Playground**: Launched locally on `http://127.0.0.1:8080` to chat with the agent and observe real-time node outputs.
+*   **Hot Reload**: Tested updating instructions for `shipping_faq_agent` in `agent.py`. The playground immediately picked up the updates, producing highly enthusiastic responses detailing our free shipping threshold for orders over `$50`.
 
-### Database Schema Validation
-The `database-schema-validator` skill analyzed the SQL schema, identified safety and style violations, and generated recommended fixes based on predefined governance rules.
+---
 
+## 📸 Screenshots
+
+### Codelab 1: Agent Skills
+
+#### Level 1: Git Conventional Commit Formatter
+![Conventional Commit](screenshots/skill-conventional-commit.png)
+*Caption: Git Commit Formatter generating a standardized conventional commit.*
+
+#### Level 1: Git Log Verification
+![Git Log Verification](screenshots/skill-git-log-verification.png)
+*Caption: Verifying repository commit history.*
+
+#### Level 2: License Header Adder
+![License Header Adder](screenshots/skill-license-header-adder.png)
+*Caption: Prepending license templates dynamically to files.*
+
+#### Level 3: JSON to Pydantic Converter
+![JSON to Pydantic](screenshots/skill-json-to-pydantic.png)
+*Caption: Transforming raw JSON structures into strongly typed Pydantic models.*
+
+#### Level 4: Database Schema Validator
 ![Database Schema Validator](screenshots/skill-database-schema-validator.png)
-
-*Caption: The database-schema-validator skill analyzed a SQL schema, identified policy violations, and generated recommended fixes based on predefined governance rules.*
-
----
-
-## 💡 Key Learnings So Far
-
-*   **Reusable Expertise:** Skills package reusable expertise and tools in self-contained folders, making them highly portable across projects.
-*   **Declarative Instructions:** Instructions are stored cleanly in a declarative `SKILL.md` file instead of repeating prompts in chat sessions.
-*   **Context Isolation:** Moving large static content (e.g., code templates, dictionaries) into a `resources/` folder reduces initial prompt size.
-*   **Few-Shot Power:** Few-shot examples often outperform long textual instructions in guiding LLM outputs.
-*   **Pattern Learning:** Agent Skills can teach complex transformation patterns through concrete examples.
-*   **Ambiguity Reduction:** Providing input/output examples reduces ambiguity and improves agent consistency.
-*   **Structured Behavior:** Structured examples are powerful tools for building reusable and reliable agent behavior.
-*   **Workflow Coordination:** Workflow-based skills can coordinate multiple validation, execution, and reasoning steps seamlessly.
-*   **Organizational Governance:** Skills can programmatically encode organizational governance, security guardrails, and engineering standards.
-*   **Operational Workflows:** Agent Skills evolve capability execution from simple prompting to reusable operational workflows.
-*   **Consistency & Quality:** Structured workflows improve the consistency, reliability, and maintainability of agentic tasks.
-*   **Efficiency:** Progressive Disclosure improves context window utilization, reduces token costs, and prevents Context Rot.
-*   **Scalability:** Structuring capabilities as isolated skills makes agents significantly easier to test, maintain, and scale.
+*Caption: Identifying policy violations and generating database remediation fixes.*
 
 ---
 
-## 📂 Project Structure
+### Codelab 2: Agents CLI & ADK 2.0
 
-```text
-day03/
-├── .agents/
-│   └── skills/
-│       ├── database-schema-validator/ # Level 4 Schema Validator Skill
-│       ├── git-commit-formatter/      # Level 1 Commit Formatter Skill
-│       ├── json-to-pydantic/          # Level 3 JSON-to-Pydantic Skill
-│       └── license-header-adder/      # Level 2 License Header Skill
-├── antigravity-skills/                # Cloned upstream skills repo
-├── git_test/                          # Test repository for git-commit-formatter
-├── screenshots/                       # Run-time execution screenshots
-│   ├── skill-conventional-commit.png
-│   ├── skill-database-schema-validator.png # Level 4 verification output
-│   ├── skill-git-log-verification.png
-│   ├── skill-json-to-pydantic.png     # Level 3 verification output
-│   └── skill-license-header-adder.png # Level 2 verification output
-├── bad_schema.sql                     # Test schema file for validation
-├── my_script.py                       # Python file updated using license-header-adder
-├── product.json                       # Raw JSON data source for Level 3
-├── product_model.py                   # Pydantic model generated via Level 3 skill
-└── README.md                          # Day 3 documentation (this file)
-```
+#### ADK Playground - Weather Assistant
+![ADK Playground](screenshots/agents-cli-playground-success.png)
+*Caption: Successfully interacting with the weather assistant in the local playground.*
+
+#### Shipping FAQ Route (Shipping Query)
+![Shipping Route](screenshots/playground-shipping-route.png)
+*Caption: Workflow successfully classifying shipping queries and routing to the shipping FAQ agent.*
+
+#### Decline Route (Unrelated Query)
+![Unrelated Route](screenshots/playground-unrelated-route.png)
+*Caption: Workflow successfully classifying unrelated queries and routing to the decline node.*
+
+#### Hot Reload Test (Playful & Enthusiastic Rates)
+![Hot Reload Test](screenshots/playground-hot-reload-test.png)
+*Caption: Real-time verification of the updated FAQ agent instructions in the playground.*
 
 ---
 
-## 👤 Author
+## 💡 Key Learnings
 
-**Nguyen Du My Ky**  
-*   Business Information Systems Student  
-*   Data Analytics Enthusiast  
-*   Accounting Assistant  
+1.  **Skills Over Prompts**: Packaging cognitive tasks into self-contained skill directories prevents prompt bloat and maintains LLM responsiveness.
+2.  **Deterministic Routing**: Combining LLM classification with graph workflows (edges and conditional nodes) yields structured, reliable routing for enterprise apps.
+3.  **Local Development Playgrounds**: ADK's web server and CLI support rapid prototyping, telemetry log capture, and hot reloading.
+4.  **Decoupled Cloud Configuration**: Adjusting telemetry (`otel_to_cloud`) and logging clients to dynamically check for credentials makes ADK agents portable and runnable locally.
+
+---
+
+## 🚀 Next Steps
+On **Day 4**, we will focus on advanced agent architectures, system evaluation datasets, and production deployment flows to Google Cloud.
