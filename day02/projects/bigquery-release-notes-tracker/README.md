@@ -85,12 +85,12 @@ Open [http://127.0.0.1:5001](http://127.0.0.1:5001) in your browser.
 ### BigQuery Releases Dashboard
 The dashboard UI loads releases dynamically, allows keyword searching, and provides check-boxes to stage items into the Twitter Composer panel:
 
-![BigQuery Release Tracker Dashboard](file:///F:/Studyspace/AI_Agents_5_Day_Google/day02/screenshots/bigquery-release-tracker.png)
+![BigQuery Release Tracker Dashboard](../../screenshots/bigquery-release-tracker.png)
 
 ### Verification Web Portal
 The sandbox Flask endpoint serving a connection check message:
 
-![Hello Flask App Verification](file:///F:/Studyspace/AI_Agents_5_Day_Google/day02/screenshots/hello-flask-app.png)
+![Hello Flask App Verification](../../screenshots/hello-flask-app.png)
 
 ---
 
