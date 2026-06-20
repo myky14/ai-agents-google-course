@@ -6,14 +6,12 @@ Welcome to my portfolio workspace for the **Google 5-Day AI Agents Intensive Cou
 
 ## 🎯 Course Roadmap & Progress
 
-- **Day 1: Introduction to Agents & Vibe Coding** ✅
-  * Foundational agent taxonomies, structured JSON outputs, and fast prototype-to-cloud deployments.
-- **Day 2: Agent Tools & Interoperability (MCP)** ✅
-  * Command-line interfaces, sandboxed systems, and Model Context Protocol (MCP) integrations.
-- **Day 3: Context Engineering: Sessions & Memory** ⏳ *Pending*
-- **Day 4: Agent Quality & Evaluation** ⏳ *Pending*
-- **Day 5: Prototype to Production** ⏳ *Pending*
-- **Capstone Project: Stateful Agent Application** ⏳ *Pending*
+*   ✅ Day 1 Complete (Introduction to Agents & Vibe Coding)
+*   ✅ Day 2 Complete (Agent Tools & Interoperability)
+*   ✅ Day 3 Complete (Agent Skills)
+*   ⏳ Day 4 Pending (Agent Quality & Evaluation)
+*   ⏳ Day 5 Pending (Prototype to Production)
+*   ⏳ Capstone Project Pending (Stateful Agent Application)
 
 ---
 
@@ -23,6 +21,7 @@ Welcome to my portfolio workspace for the **Google 5-Day AI Agents Intensive Cou
 | :--- | :--- | :--- | :---: | :---: |
 | **Day 1** | **AI SQL Analyst Assistant** | Structured JSON outputs, dynamic schema parsing, and interactive SVG dashboard charts. | 🚀 Completed | [View Project](day01/ai-sql-analyst-assistant/) |
 | **Day 2** | **CLI & MCP Tool Integration** | Antigravity CLI workspace trust, BigQuery release RSS parsing, and Google Developer Knowledge MCP. | 🚀 Completed | [View Project](day02/) |
+| **Day 3** | **Agent Skills Progression** | Git Conventional Commits, progressive license injection, few-shot JSON parsing, and schema validation orchestration. | 🚀 Completed | [View Project](day03/) |
 
 ---
 
@@ -40,12 +39,25 @@ Welcome to my portfolio workspace for the **Google 5-Day AI Agents Intensive Cou
 *   **Model Context Protocol (MCP):** Configured the remote `google-developer-knowledge` MCP server to query up-to-date Google Cloud docs, generate automated drive upload scripts, and design an end-to-end Document AI billing pipeline.
 *   **Tech Stack:** Python 3.10+, Flask, RSS/XML parsing, Google API client library, and Model Context Protocol (MCP).
 
+### 🛠️ Day 3: Agent Skills
+
+Explored how Agent Skills enable reusable expertise through structured folders, references, examples, and workflow orchestration.
+
+*   **Location:** [`day03/`](day03/)
+*   **Skills Completed:**
+    *   `git-commit-formatter`: Pure instructions-based commit formatting.
+    *   `license-header-adder`: Reference-based dynamic license injection.
+    *   `json-to-pydantic`: Few-shot-based raw JSON mapping to Pydantic classes.
+    *   `database-schema-validator`: Workflow orchestration-based multi-step SQL validator.
+*   **Key Concepts:** Context Rot, Progressive Disclosure, Few-Shot Learning, Workflow Orchestration, Reusable Agent Capabilities.
+
 ---
 
 ## 💡 What I Learned So Far
 
 *   **Day 1 (Agent Workflows):** Moving from basic prompt-response completions to structured, schema-enforced agent outputs. By designing rigorous JSON response schemas and system instructions, we can guarantee that an agent generates correct SQL dialects and maps outcomes to interactive charting interfaces reliably.
 *   **Day 2 (Agent Interoperability):** Extending agent capabilities through execution sandboxes (Antigravity CLI) and standard APIs. Utilizing the Model Context Protocol (MCP) transforms agents from text-based summarizers into interactive systems that retrieve live, official technical documentation on-demand, write drive upload scripts, and design production pipelines with up-to-date SDK knowledge.
+*   **Day 3 (Agent Skills & Context Engineering):** Encapsulating capabilities into modular, reusable skills to prevent context overload and rot. Moving from simple instruction-following (Level 1) and external resource referencing (Level 2) to few-shot example pattern-matching (Level 3) and algorithmic multi-step workflow orchestration (Level 4) allows agents to execute complex operations with high reliability.
 
 ---
 
@@ -55,6 +67,9 @@ Welcome to my portfolio workspace for the **Google 5-Day AI Agents Intensive Cou
 *   **Vibe Coding:** Accelerated dashboard prototyping using interactive AI tooling.
 *   **Antigravity IDE & CLI:** Session authorization, sandbox testing, and TUI agent traces.
 *   **Model Context Protocol (MCP):** Dynamic schema discovery, document indexing, and remote tool execution.
+*   **Agent Skills Architecture:** Modular capability structure (Instructions, References, Examples, Workflows).
+*   **Context Engineering:** Progressive disclosure of instructions and resources to preserve model context.
+*   **Few-Shot Pattern Matching:** Guided LLM behavior and type-inference via input-output pairs.
 *   **Google AI Studio:** System instructions refinement, safety parameters config, and Structured JSON Schema definitions.
 *   **Cloud Run Deployment:** Serverless container packaging and GCP deployment pipelines.
 *   **Full Stack Prototyping:** Node.js, Express, React 19, Tailwind CSS v4, Python, and Flask development.
@@ -79,6 +94,14 @@ Welcome to my portfolio workspace for the **Google 5-Day AI Agents Intensive Cou
 │   ├── screenshots/            # Verification screenshots
 │   ├── upload_to_drive.py      # Google Drive upload script generated via MCP
 │   └── README.md               # Day 2 portfolio documentation
+├── day03/                      # Day 3: Agent Skills & Modular Design
+│   ├── .agents/skills/         # Installed agent skills (levels 1-4)
+│   ├── screenshots/            # Verification screenshots
+│   ├── bad_schema.sql          # Test SQL schema for Level 4 validator
+│   ├── my_script.py            # Script injected with Level 2 license header
+│   ├── product.json            # JSON data for Level 3 conversion
+│   ├── product_model.py        # Generated Pydantic model from JSON
+│   └── README.md               # Day 3 portfolio documentation
 ├── notes/                      # Course notes, references, and scratchpads
 ├── .gitignore                  # Configured Git ignore patterns
 ├── README.md                   # Workspace repository documentation (this file)
