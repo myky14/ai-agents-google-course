@@ -6,38 +6,38 @@
     --bg-card-hover: rgba(28, 40, 65, 0.85);
     --border-color: rgba(255, 255, 255, 0.08);
     --border-color-active: rgba(99, 102, 241, 0.4);
-    
+
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --text-muted: #64748b;
-    
+
     /* Category Colors */
     --color-feature: #10b981;
     --color-announcement: #3b82f6;
     --color-issue: #f59e0b;
     --color-deprecation: #ef4444;
     --color-general: #8b5cf6;
-    
+
     --color-primary: #6366f1;
     --color-primary-hover: #4f46e5;
     --color-twitter: #1d9bf0;
     --color-twitter-hover: #1a8cd8;
-    
+
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-display: 'Outfit', var(--font-sans);
     --font-mono: 'Fira Code', monospace;
-    
+
     --sidebar-width: 320px;
     --composer-width: 380px;
-    
+
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
-    
+
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
-    
+
     --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -51,7 +51,7 @@
 
 body {
     background-color: var(--bg-app);
-    background-image: 
+    background-image:
         radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
         radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
     color: var(--text-primary);
@@ -494,9 +494,9 @@ body {
     cursor: pointer;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
-                border-color var(--transition-normal), 
-                box-shadow var(--transition-normal), 
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color var(--transition-normal),
+                box-shadow var(--transition-normal),
                 background-color var(--transition-normal);
     display: flex;
     flex-direction: column;
@@ -1126,7 +1126,7 @@ body {
     .app-container {
         grid-template-columns: var(--sidebar-width) 1fr;
     }
-    
+
     /* Hide right sidebar, make it a floating panel or sliding sheet */
     .composer-pane {
         position: fixed;
@@ -1138,15 +1138,15 @@ body {
         transform: translateX(100%);
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    
+
     .composer-pane.active {
         transform: translateX(0);
     }
-    
+
     .close-composer-btn {
         display: block;
     }
-    
+
     .mobile-composer-trigger {
         display: flex;
     }
@@ -1159,26 +1159,26 @@ body {
         height: auto;
         min-height: 100vh;
     }
-    
+
     .sidebar {
         height: auto;
         border-right: none;
         border-bottom: 1px solid var(--border-color);
         padding: 16px;
     }
-    
+
     .main-content {
         height: auto;
     }
-    
+
     .feed-header {
         padding: 12px 16px;
     }
-    
+
     .feed-container {
         padding: 16px;
     }
-    
+
     .composer-pane {
         width: 100%;
         max-width: 100%;

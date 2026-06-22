@@ -13,7 +13,7 @@ from google.genai import types
 def map_to_agent_event(event):
     if not event.content:
         return None
-        
+
     parts_list = []
     for part in event.content.parts:
         part_dict = {}
@@ -40,11 +40,11 @@ def map_to_agent_event(event):
                 "response": response,
             }
         parts_list.append(part_dict)
-    
+
     author = event.author
     if author == "model":
         author = "expense_approval_workflow"
-        
+
     return {
         "author": author or "expense_approval_workflow",
         "content": {
@@ -93,9 +93,9 @@ async def run_scenario(case_id, payload, runner):
     session = await runner.session_service.create_session(
         app_name="expense_agent", user_id=user_id
     )
-    
+
     is_interrupted = False
-    
+
     # Turn 0: Send expense payload
     print(f"[{case_id}] Running initial turn...")
     async for event in runner.run_async(
@@ -107,7 +107,7 @@ async def run_scenario(case_id, payload, runner):
             for part in event.content.parts:
                 if part.function_call and part.function_call.name == "adk_request_input":
                     is_interrupted = True
-                    
+
     # Turn 1: If human approval required, automate the decision
     if is_interrupted:
         description = payload.get("description", "")
@@ -117,7 +117,7 @@ async def run_scenario(case_id, payload, runner):
         else:
             decision = "approve"
             print(f"[{case_id}] Clean request. Automatically APPROVING.")
-            
+
         decision_payload = {"human_decision": decision}
         async for event in runner.run_async(
             user_id=user_id,
@@ -125,7 +125,7 @@ async def run_scenario(case_id, payload, runner):
             new_message=types.Content(role="user", parts=[types.Part.from_text(text=json.dumps(decision_payload))]),
         ):
             pass
-            
+
     # Retrieve complete session events
     refreshed_session = await runner.session_service.get_session(
         app_name="expense_agent", session_id=session.id, user_id=user_id
@@ -135,29 +135,29 @@ async def run_scenario(case_id, payload, runner):
 async def main():
     dataset_path = Path("tests/eval/datasets/basic-dataset.json")
     output_path = Path("artifacts/traces/generated_traces.json")
-    
+
     if not dataset_path.exists():
         print(f"Dataset path {dataset_path} does not exist.")
         return
-        
+
     print(f"Loading dataset from {dataset_path}...")
     with open(dataset_path, encoding="utf-8") as f:
         data = json.load(f)
-        
+
     cases = data.get("eval_cases", [])
     print(f"Loaded {len(cases)} cases. Starting trace generation...")
-    
+
     runner = InMemoryRunner(app=app)
     generated_cases = []
-    
+
     for case in cases:
         case_id = case["eval_case_id"]
         prompt_text = case["prompt"]["parts"][0]["text"]
         payload = json.loads(prompt_text)
-        
+
         events = await run_scenario(case_id, payload, runner)
         turns = build_turns(events)
-        
+
         case_dict = {
             "eval_case_id": case_id,
             "prompt": case["prompt"],
@@ -176,18 +176,18 @@ async def main():
                 "turns": turns
             }
         }
-        
+
         final_resp = get_final_response(events)
         if final_resp:
             case_dict["responses"] = [{"response": final_resp}]
-            
+
         generated_cases.append(case_dict)
-        
+
     output_data = {"eval_cases": generated_cases}
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output_data, f, indent=2, ensure_ascii=False)
-        
+
     print(f"Successfully wrote {len(generated_cases)} traces to {output_path}")
 
 if __name__ == "__main__":

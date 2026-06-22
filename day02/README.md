@@ -6,7 +6,7 @@ This repository showcases interactive projects, tools development, and foundatio
 
 ## 🎯 Day 2 Overview
 
-Day 2 focuses on extending agent capabilities beyond isolated chat loops by integrating command-line interfaces and standardized protocols to access live system state, official document indexes, and external tool suites. 
+Day 2 focuses on extending agent capabilities beyond isolated chat loops by integrating command-line interfaces and standardized protocols to access live system state, official document indexes, and external tool suites.
 
 ### Core Codelabs Completed:
 1.  **Getting Started with Antigravity CLI:** Workspace authentication, secure execution sandboxes, agent TUI visualization, and artifact approval workflows.
@@ -61,7 +61,7 @@ Rather than developing fragile, custom API integrations for every tools suite, a
 A real-world business application researched and designed using the Google Developer Knowledge MCP server is an automated accounting pipeline:
 
 ```text
-[Invoice Ingestion] 
+[Invoice Ingestion]
        ↓
 [Document AI Extraction] (Extracts invoice_id, vendor, total_amount, tax)
        ↓
@@ -165,7 +165,7 @@ GEMINI_API_KEY=your_api_key_here
 
 ## 👤 Author
 
-**Nguyen Du My Ky**  
-*   Business Information Systems Student  
-*   Data Analytics Enthusiast  
-*   Accounting Assistant  
+**Nguyen Du My Ky**
+*   Business Information Systems Student
+*   Data Analytics Enthusiast
+*   Accounting Assistant

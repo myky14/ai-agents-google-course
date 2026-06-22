@@ -424,10 +424,10 @@ export default function App() {
 
       {/* Primary Workspace Panel */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
+
         {/* LEFT VIEW COLUMN: SCHEMA & QUESTION DESIGN CANVAS */}
         <section className={`${showHistory ? "lg:col-span-8" : "lg:col-span-6"} transition-all duration-300 xl:col-span-6 flex flex-col gap-6`}>
-          
+
           {/* Database Setup Card */}
           <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
             <div className="flex items-center justify-between mb-4">
@@ -475,7 +475,7 @@ export default function App() {
                 Instant Prototype Loading
               </span>
             </div>
-            
+
             <p className="text-xs text-slate-500 mb-4 leading-relaxed">
               Click any blueprint schema loaded with typical relational metrics, constraints, and professional sample query prompts.
             </p>
@@ -692,7 +692,7 @@ CREATE TABLE users (
 
         {/* RIGHT VIEW COLUMN: INTELLIGENT COMPREHENSIVE OUTPUTS SHEET */}
         <section className={`${showHistory ? "lg:col-span-12 xl:col-span-8" : "lg:col-span-6"} transition-all duration-300 xl:col-span-6 flex flex-col gap-6`}>
-          
+
           {/* Empty / Loading / Done Core States Manager */}
           <AnimatePresence mode="wait">
             {isLoading ? (
@@ -962,7 +962,7 @@ CREATE TABLE users (
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block border-b border-slate-150 pb-2">
                     The assistant will generate:
                   </p>
-                  
+
                   <div className="flex items-start gap-2.5">
                     <span className="text-indigo-600 text-sm mt-0.5">•</span>
                     <div>
@@ -1023,7 +1023,7 @@ CREATE TABLE users (
               <p>Data Analytics Enthusiast</p>
               <p>Accounting Assistant</p>
             </div>
-            
+
             {/* Social Placeholder Buttons */}
             <div className="flex items-center gap-2 pt-2">
               <a

@@ -6,7 +6,7 @@ A Flask-based web application that aggregates, categorizes, and displays Google 
 
 ## 🔎 Overview
 
-Modern development teams rely heavily on cloud data warehouses like BigQuery. Staying on top of continuous feature rollouts, announcements, and deprecations is crucial. 
+Modern development teams rely heavily on cloud data warehouses like BigQuery. Staying on top of continuous feature rollouts, announcements, and deprecations is crucial.
 
 This project provides a clean, dark-themed, glassmorphic analytics dashboard. It automates feed fetching from Google's official BigQuery release notes RSS, parses the raw XML payloads, categorizes individual updates, and integrates a dynamic composer utility to draft and share release briefs on social media platforms.
 

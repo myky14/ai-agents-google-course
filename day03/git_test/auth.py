@@ -17,11 +17,11 @@ def login():
     creds = None
     token_path = 'token.json'
     client_secrets_path = 'credentials.json'
-    
+
     # Load cached tokens if they exist
     if os.path.exists(token_path):
         creds = Credentials.from_authorized_user_file(token_path, SCOPES)
-        
+
     # Re-authenticate if credentials are missing or invalid
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
@@ -35,11 +35,10 @@ def login():
             print("Starting local OAuth web server for Google login...")
             flow = InstalledAppFlow.from_client_secrets_file(client_secrets_path, SCOPES)
             creds = flow.run_local_server(port=0)
-            
+
         # Cache credentials for subsequent authorizations
         with open(token_path, 'w') as token_file:
             token_file.write(creds.to_json())
-            
+
     print("Google authentication successful.")
     return creds
-

@@ -1,149 +1,239 @@
-# 🤖 Google 5-Day AI Agents Intensive Course Workspace
+# 🤖 Google / Kaggle 5-Day Gen AI Intensive Course 2026
 
-Welcome to my portfolio workspace for the **Google 5-Day AI Agents Intensive Course**. This repository documents the daily projects, architectural concepts, personal notes, and capstone work developed to master autonomous, reliable, and stateful AI agents using the Google Gemini ecosystem.
+> **Student:** Nguyễn Du Mỹ Kỳ — Business Information Systems (BIS)
+> **Program:** Google / Kaggle 5-Day Gen AI Intensive Course 2026
+> **Focus:** AI Agent Engineering · Security · Human-in-the-Loop · Evaluation
 
----
-
-## 🎯 Course Roadmap & Progress
-
-*   ✅ Day 1 Completed
-*   ✅ Day 2 Completed
-*   ✅ Day 3 Completed
-*   ⏳ Day 4 Pending
-*   ⏳ Day 5 Pending
-*   ⏳ Capstone Pending
+[![Days Completed](https://img.shields.io/badge/Days%20Completed-4%20of%205-blue)](#learning-journey)
+[![Status](https://img.shields.io/badge/Status-4%20of%205%20Days%20Completed-brightgreen)](#learning-journey)
+[![Platform](https://img.shields.io/badge/Platform-Google%20ADK%202.0-orange)](#key-skills-practiced)
 
 ---
 
-## 📊 Course Progress Summary
+## 👤 About Me
 
-| Day | Project / Codelab | Key Achievements | Status | Documentation / Code |
-| :--- | :--- | :--- | :---: | :---: |
-| **Day 1** | **AI SQL Analyst Assistant** | Structured JSON outputs, dynamic schema parsing, and interactive SVG dashboard charts. | 🚀 Completed | [View Project](day01/ai-sql-analyst-assistant/) |
-| **Day 2** | **CLI & MCP Tool Integration** | Antigravity CLI workspace trust, BigQuery release RSS parsing, and Google Developer Knowledge MCP. | 🚀 Completed | [View Project](day02/) |
-| **Day 3** | **Agent Skills Progression** | Git Conventional Commits, progressive license injection, few-shot JSON parsing, and schema validation orchestration. | 🚀 Completed | [View Project](day03/) |
-
----
-
-## 🚀 Completed Projects
-
-### 📱 Day 1: AI SQL Analyst Assistant
-*   **Location:** [`day01/ai-sql-analyst-assistant`](day01/ai-sql-analyst-assistant/)
-*   **Live Demo:** [https://ai-sql-analyst-assistant-567449380471.asia-southeast1.run.app](https://ai-sql-analyst-assistant-567449380471.asia-southeast1.run.app)
-*   **Purpose:** Empower users to query relational databases in plain English. The agent converts business queries into optimized, dialect-specific SQL, breaks down query logic step-by-step, draft business insights, and renders dynamic preview dashboards (Bar, Line, Area, and Pie charts) using simulated datasets.
-*   **Tech Stack:** React 19, TypeScript, Vite, Tailwind CSS v4, Express, and Google GenAI SDK (`@google/genai` with `gemini-3.5-flash`).
-
-### 📊 Day 2: BigQuery Release Notes Tracker & MCP Setup
-*   **Location:** [`day02/projects/bigquery-release-notes-tracker`](day02/projects/bigquery-release-notes-tracker/)
-*   **Purpose:** Monitors Google Cloud's BigQuery system updates in real-time. It groups releases dynamically, offers social draft utilities with character tracking, and demonstrates tool interoperability.
-*   **Model Context Protocol (MCP):** Configured the remote `google-developer-knowledge` MCP server to query up-to-date Google Cloud docs, generate automated drive upload scripts, and design an end-to-end Document AI billing pipeline.
-*   **Tech Stack:** Python 3.10+, Flask, RSS/XML parsing, Google API client library, and Model Context Protocol (MCP).
-
-### 🛠️ Day 3: Agent Skills & Graph Workflows
-
-Explored how Agent Skills enable reusable developer workflows, and built a graph workflow using the Agents CLI and ADK 2.0.
-
-*   **Location:** [`day03/`](day03/)
-*   **Key Achievements:**
-    *   Completed the 4 levels of Agent Skills: `git-commit-formatter`, `license-header-adder`, `json-to-pydantic`, and `database-schema-validator`.
-    *   Scaffolded and built `customer-support-agent` using ADK 2.0 Graph Workflow.
-    *   Verified conditional routing (shipping FAQ agent vs. decline node) in the local ADK Playground.
-*   **Key Concepts:** Context Rot, Progressive Disclosure, Few-Shot Learning, Workflow Orchestration, Reusable Agent Capabilities.
+| | |
+| :--- | :--- |
+| **Name** | Nguyễn Du Mỹ Kỳ *(Nguyen Du My Ky)* |
+| **Role** | Business Information Systems Student · University of Economics Ho Chi Minh City (UEH) |
+| **Interests** | AI Agents · Business Analysis · Data Analytics · ERP Systems · Workflow Automation |
+| **GitHub** | [@myky14](https://github.com/myky14) |
+| **LinkedIn** | [linkedin.com/in/myky14](https://www.linkedin.com/in/myky14/) |
 
 ---
 
-## 💡 What I Learned So Far
+## 📋 Overview
 
-*   **Day 1 (Agent Workflows):** Moving from basic prompt-response completions to structured, schema-enforced agent outputs. By designing rigorous JSON response schemas and system instructions, we can guarantee that an agent generates correct SQL dialects and maps outcomes to interactive charting interfaces reliably.
-*   **Day 2 (Agent Interoperability):** Extending agent capabilities through execution sandboxes (Antigravity CLI) and standard APIs. Utilizing the Model Context Protocol (MCP) transforms agents from text-based summarizers into interactive systems that retrieve live, official technical documentation on-demand, write drive upload scripts, and design production pipelines with up-to-date SDK knowledge.
-*   **Day 3 (Agent Skills & Context Engineering):** Encapsulating capabilities into modular, reusable skills to prevent context overload and rot. Moving from simple instruction-following (Level 1) and external resource referencing (Level 2) to few-shot example pattern-matching (Level 3) and algorithmic multi-step workflow orchestration (Level 4) allows agents to execute complex operations with high reliability.
+This repository documents my hands-on work throughout the **Google / Kaggle 5-Day Gen AI Intensive Course 2026** — a structured engineering program focused on building production-grade AI agents using Google's Agent Development Kit (ADK 2.0), Gemini models, and the Antigravity IDE.
+
+Over five days, the course progresses from foundational LLM integration through full agent orchestration, security hardening, evaluation methodology, and ambient event-driven deployment. Rather than surface-level prompt experimentation, this course treats AI agents as **software engineering artifacts** requiring the same rigor as any other production system: modular architecture, test coverage, security review, and iterative evaluation.
+
+**My learning goals:**
+- Understand how ADK 2.0 structures agent graphs, tools, and workflows.
+- Design production-ready agents with trust boundaries, HITL gates, and security checkpoints.
+- Apply static analysis, threat modeling, and TDD to secure agent development.
+- Build the foundation needed for AI-augmented Business Analysis, ERP automation, and multi-agent orchestration.
+
+---
+
+## 🗓️ Learning Journey
+
+| Day | Topic | Key Project | Status |
+| :---: | :--- | :--- | :---: |
+| **01** | Foundations — LLM Integration & Vibe Coding | AI SQL Analyst Assistant | ✅ Completed |
+| **02** | Agent Tools & Interoperability (MCP) | BigQuery Release Notes Tracker | ✅ Completed |
+| **03** | ADK Agent Workflows & Human-in-the-Loop | Customer Support Agent (Graph) | ✅ Completed |
+| **04** | Agent Security, Evaluation & Secure Coding Gates | Ambient Expense Agent + Secure Shopping Assistant | ✅ Completed |
+| **05** | Multi-Agent Systems & Deployment | *(Coming Soon)* | ⏳ Upcoming |
+
+---
+
+## 🏗️ Repository Structure
+
+```
+AI_Agents_5_Day_Google/
+├── README.md                        # This portfolio landing page
+├── day01/                           # Day 01: AI SQL Analyst Assistant
+│   └── ai-sql-analyst-assistant/    # React + Express + Gemini API web app
+├── day02/                           # Day 02: Agent Tools & MCP Integration
+│   ├── projects/
+│   │   └── bigquery-release-notes-tracker/
+│   └── README.md
+├── day03/                           # Day 03: ADK Graph Workflows & HITL
+│   ├── .agents/skills/              # Installed agent skills (Levels 1–4)
+│   ├── customer-support-agent/      # ADK 2.0 graph workflow agent
+│   └── README.md
+├── day04/                           # Day 04: Security, Evaluation & Secure Gates
+│   ├── ambient-expense-agent/       # ADK 2.0 ambient Pub/Sub expense processor
+│   ├── shopping-assistant/          # Secure shopping assistant with TDD & Semgrep
+│   ├── threat_model.md              # STRIDE security assessment
+│   ├── screenshots/                 # Visual walkthroughs (17 screenshots)
+│   └── README.md
+├── day05/                           # Day 05: (Coming Soon)
+├── capstone/                        # Capstone project workspace
+└── notes/                           # Course notes and scratchpads
+```
 
 ---
 
 ## 🛠️ Key Skills Practiced
 
-*   **AI Agent Architectures:** Planning, verification, and human-in-the-loop validation workflows.
-*   **Vibe Coding:** Accelerated dashboard prototyping using interactive AI tooling.
-*   **Antigravity IDE & CLI:** Session authorization, sandbox testing, and TUI agent traces.
-*   **Model Context Protocol (MCP):** Dynamic schema discovery, document indexing, and remote tool execution.
-*   **Agent Skills Architecture:** Modular capability structure (Instructions, References, Examples, Workflows).
-*   **Context Engineering:** Progressive disclosure of instructions and resources to preserve model context.
-*   **Few-Shot Pattern Matching:** Guided LLM behavior and type-inference via input-output pairs.
-*   **Google AI Studio:** System instructions refinement, safety parameters config, and Structured JSON Schema definitions.
-*   **Cloud Run Deployment:** Serverless container packaging and GCP deployment pipelines.
-*   **Full Stack Prototyping:** Node.js, Express, React 19, Tailwind CSS v4, Python, and Flask development.
+| Domain | Skills |
+| :--- | :--- |
+| **Agent Frameworks** | ADK 2.0, Agents CLI, Google Gemini Models |
+| **IDE & Tooling** | Antigravity IDE, Antigravity Hooks, MCP Protocol |
+| **Agent Design Patterns** | Human-in-the-Loop (HITL), Ambient Agents, Graph Workflows |
+| **Security Engineering** | STRIDE Threat Modeling, Semgrep Static Analysis, Pre-Commit Security Gates |
+| **Security Patterns** | Prompt Injection Defense, PII Redaction, Security Checkpoints, Agent PreToolUse Hooks |
+| **Testing & Evaluation** | LLM-as-a-Judge Evaluation, Outcome-Based Security Tests, Test-Driven Development (TDD) |
+| **Backend Infrastructure** | FastAPI, Cloud Run Readiness, Event-Driven Architectures |
+| **Web Development** | React 19, TypeScript, Tailwind CSS v4, Express |
 
 ---
 
-## 📂 Project Repository Tree
+## 🌟 Project Highlights
 
-```text
-├── .venv/                      # Python virtual environment (ignored)
-├── capstone/                   # Capstone project workspace (upcoming)
-├── day01/                      # Day 1: Introduction to Agents & Vibe Coding
-│   └── ai-sql-analyst-assistant/
-│       ├── images/             # Documentation screenshots
-│       ├── src/                # React client source files
-│       ├── package.json        # Node dependencies and build scripts
-│       ├── server.ts           # Express server & Gemini API integration
-│       └── .env.example        # Template for local environment setup
-├── day02/                      # Day 2: Agent Tools & Interoperability (MCP)
-│   ├── projects/
-│   │   └── bigquery-release-notes-tracker/ # Flask release tracker app
-│   ├── screenshots/            # Verification screenshots
-│   ├── upload_to_drive.py      # Google Drive upload script generated via MCP
-│   └── README.md               # Day 2 portfolio documentation
-├── day03/                      # Day 3: Agent Skills & Modular Design
-│   ├── .agents/skills/         # Installed agent skills (levels 1-4)
-│   ├── customer-support-agent/ # ADK 2.0 customer support graph agent
-│   ├── screenshots/            # Verification screenshots
-│   ├── bad_schema.sql          # Test SQL schema for Level 4 validator
-│   ├── my_script.py            # Script injected with Level 2 license header
-│   ├── product.json            # JSON data for Level 3 conversion
-│   ├── product_model.py        # Generated Pydantic model from JSON
-│   └── README.md               # Day 3 portfolio documentation
-├── notes/                      # Course notes, references, and scratchpads
-├── .gitignore                  # Configured Git ignore patterns
-├── README.md                   # Workspace repository documentation (this file)
-├── requirements.txt            # Python dependency requirements for workspace scripts
-└── test_gemini.py              # Quick workspace API connectivity test script
-```
+### Day 01 — AI SQL Analyst Assistant
+**Project:** [`day01/ai-sql-analyst-assistant`](day01/ai-sql-analyst-assistant/) | **[Live Demo →](https://ai-sql-analyst-assistant-567449380471.asia-southeast1.run.app)**
+
+A full-stack web application that allows business users to query relational databases in plain English. The agent converts natural language into optimized, dialect-specific SQL and renders results as interactive charts.
+
+- **Key Achievement**: Designed rigorous JSON response schemas and system instructions to guarantee structured SQL output across multiple dialects.
+- **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS v4, Express, Gemini API (`gemini-3.5-flash`).
+- **Takeaway**: Moving from basic prompt-response completions to schema-enforced structured agent outputs dramatically improves reliability.
 
 ---
 
-## 🛠️ General Workspace Setup & Installation
+### Day 02 — Agent Tool Integration & Model Context Protocol (MCP)
+**Project:** [`day02/`](day02/)
+
+Built a BigQuery release notes tracker that surfaces Google Cloud system updates in real-time, and connected agents to live external knowledge via the Model Context Protocol (MCP). By querying the official Google Developer Knowledge MCP server, the agent retrieved up-to-date SDK documentation — knowledge that falls outside its training window — and used it to autonomously generate a functional Google Drive upload script.
+
+- **Key Achievement**: Agent autonomously produced a working Drive upload script and designed a Document AI billing pipeline by querying live, authoritative documentation through MCP — without any hardcoded API references.
+- **Takeaway**: Connecting agents to live data sources through standard protocols (MCP) transforms them from static text generators into systems that can act on current, real-world knowledge.
+
+---
+
+### Day 03 — ADK Agent Workflows & HITL
+**Project:** [`day03/`](day03/)
+
+Progressed through four levels of Agent Skills (from simple instruction-following to multi-step orchestration), and built a Customer Support Agent using ADK 2.0's directed graph workflow. Explored conditional routing, reusable capabilities, and context engineering.
+
+- **Key Achievement**: Scaffolded a graph-based customer support agent with conditional routing — a shipping FAQ path vs. a graceful decline node — verified in the local ADK Playground.
+- **Takeaway**: Modular skills design prevents context rot and makes agent behavior verifiable by separating concerns into distinct, testable components.
+
+---
+
+### Day 04 — Agent Security, Evaluation & Secure Coding Gates
+**Project:** [`day04/`](day04/) | **[Detailed README →](day04/README.md)**
+
+The most security-intensive day of the course. Built two production-relevant projects:
+
+**Codelab 1 — Ambient Expense Agent** (`day04/ambient-expense-agent/`):
+An event-driven corporate expense processing agent. It is triggered by Pub/Sub events via a FastAPI endpoint, applies PII redaction, runs a multi-layer security checkpoint (with prompt injection detection), and routes requests through either auto-approval (<$100) or a Human-in-the-Loop gate.
+
+> ⚠️ **Critical Finding**: Evaluation discovered that low-value prompt injection attempts (under the $100 auto-approval threshold) could bypass the security checkpoint, since routing happened *before* security scanning. This is a real class of logic-ordering vulnerability in production agent pipelines.
+
+**Codelab 2 — Secure Shopping Assistant** (`day04/shopping-assistant/`):
+A retail assistant with a full secure development pipeline:
+- **Semgrep Pre-Commit Gate**: A hardcoded mock API key (`api_key="AIzaSyD-mock-key-value-12345"`) was intentionally introduced to trigger and demonstrate the security gate. Semgrep blocked the commit, and the credential was refactored to load from environment variables.
+- **Antigravity PreToolUse Hook**: Intercepts all `run_command` calls and validates them against a security script before execution, blocking destructive commands.
+- **STRIDE Threat Model**: A local `threat_model.md` was generated covering all six STRIDE pillars.
+- **TDD Security Test Suite**: Outcome-based pytest tests verified all security boundaries for the discount redemption tool.
+
+**Takeaway**: Local commit hooks and agent hooks are a good first line of defense, but not sufficient on their own — identical gates must be enforced in CI/CD pipelines, since local hooks can be bypassed with `--no-verify`.
+
+---
+
+## 📸 Screenshots & Documentation
+
+Visual walkthroughs and detailed notes are available in each day's dedicated README:
+
+| Day | Visual Documentation |
+| :---: | :--- |
+| Day 01 | [`day01/ai-sql-analyst-assistant/`](day01/ai-sql-analyst-assistant/) |
+| Day 02 | [`day02/README.md`](day02/README.md) |
+| Day 03 | [`day03/README.md`](day03/README.md) |
+| Day 04 | [`day04/README.md`](day04/README.md) — 17 screenshots covering setup through secure commit |
+
+---
+
+## 💡 What I Learned
+
+**1. Building agents is more than prompting.**
+Agent reliability requires designing explicit schemas, validation layers, and behavioral constraints. A well-prompted agent still needs structured output, error handling, and testable tool interfaces.
+
+**2. Security boundaries must be designed before deployment.**
+Retrofitting security into a working agent is significantly harder than designing trust boundaries from the start. Threat modeling (STRIDE), pre-commit hooks, and input validation schemas all need to be foundational decisions — not afterthoughts.
+
+**3. Deterministic business rules should remain outside the LLM.**
+Routing decisions, approval thresholds, and access control checks should be expressed as explicit graph nodes and code — not left to the model's judgment. The Day 04 security gap (low-value injection bypass) was caused by conflating routing logic with security logic.
+
+**4. Evaluation is a first-class engineering activity.**
+Agent evaluation should include adversarial test cases specifically designed to probe security boundaries, not just accuracy metrics. The automated scorecard that revealed the prompt injection bypass was built with these adversarial scenarios in mind.
+
+**5. AI agents require software engineering discipline.**
+Version control, code linting, static analysis, test coverage, and structured logging are just as essential for agent systems as for any other production software.
+
+---
+
+## 🚀 Future Work
+
+- [ ] **Complete Day 05** — Multi-Agent Systems & Deployment
+- [ ] **CI/CD Security Pipeline** — Add GitHub Actions with Semgrep to enforce the same gates that currently run only as local pre-commit hooks
+- [ ] **Cloud Run Deployment** — Deploy production-ready agents with proper IAM roles and Secret Manager for credential handling
+- [ ] **Adversarial Evaluation Suite** — Extend security test coverage to 50+ adversarial scenarios, covering the logic-ordering vulnerability identified in Day 04
+
+---
+
+## 🪞 Personal Reflection
+
+As a Business Information Systems (BIS) student, I came into this course with a background in analytical frameworks, ERP systems, and process design — not deep software engineering. What surprised me most is how directly applicable enterprise thinking is to AI agent architecture.
+
+The patterns I worked with this week — trust boundaries, escalation workflows, audit trails, and deterministic routing — are the same principles that underpin well-designed ERP approval chains and BI reporting pipelines. The difference is that AI agents can now execute these workflows in natural language, respond to unstructured events, and adapt to novel inputs that traditional rule-based systems cannot handle.
+
+What I am building toward is the intersection of these domains: AI agents that can augment Business Analysis work (requirement extraction, process documentation), automate ERP data flows (expense validation, vendor reconciliation), and bring measurable accountability through structured evaluation and auditability. Day 04's security focus was a reminder that getting there requires the same rigor we expect from any production system — and that security, like testing, cannot be treated as optional.
+
+---
+
+## ⚙️ Setup & Installation
 
 ### Prerequisites
-*   **Python 3.10+** (for python scripts)
-*   **Node.js 18+** (for frontend applications)
+- Python 3.10+
+- Node.js 18+ (for Day 01 frontend)
+- `uv` package manager (for Day 03/04 ADK projects)
 
-### 1. Workspace Virtual Environment (Python)
-To configure python scripts and test environments in the workspace root:
+### Quick Start (Root Workspace)
 ```bash
+# Clone the repository
+git clone https://github.com/myky14/AI_Agents_5_Day_Google.git
+cd AI_Agents_5_Day_Google
+
+# Set up Python environment
 python -m venv .venv
-# Activate on Windows (PowerShell):
+# Windows:
 .venv\Scripts\Activate.ps1
-# Activate on macOS/Linux:
+# macOS/Linux:
 source .venv/bin/activate
 
-# Install dependencies:
 pip install -r requirements.txt
-```
 
-### 2. Configure Environment Variables
-You need a Google Gemini API Key. If you do not have one, generate it at [Google AI Studio](https://aistudio.google.com/).
+# Configure API key (obtain yours at https://aistudio.google.com/)
+# Create a .env file and add your key:
+echo 'GEMINI_API_KEY=your_key_here' > .env
 
-Create a `.env` file in the root directory:
-```env
-GEMINI_API_KEY=your_actual_api_key_here
-```
-
-### 3. Verify Local API Connectivity
-```bash
+# Verify connectivity
 python test_gemini.py
 ```
 
+> [!IMPORTANT]
+> **Security Note:** Never commit your actual `.env` file or expose API keys. Both the root and all sub-project `.gitignore` files are configured to exclude sensitive credential files from version control.
+
 ---
 
-> [!IMPORTANT]
-> **Security Note:** Never commit your actual `.env` file or expose your API keys in any public workspace. Both the root and sub-project `.gitignore` profiles are strictly configured to prevent sensitive files from being pushed to Git.
+<div align="center">
+
+**Nguyễn Du Mỹ Kỳ · 2026**
+*Google / Kaggle 5-Day Gen AI Intensive Course — Portfolio Repository*
+
+</div>

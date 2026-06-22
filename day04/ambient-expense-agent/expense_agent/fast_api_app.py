@@ -74,7 +74,7 @@ class PubSubNormalizationMiddleware:
                     except Exception:
                         pass
                 return message
-            
+
             await self.app(scope, custom_receive, send)
         else:
             await self.app(scope, receive, send)

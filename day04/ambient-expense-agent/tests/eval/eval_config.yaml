@@ -39,7 +39,7 @@ custom_metrics:
       """
           api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
           client = Client(api_key=api_key)
-          
+
           # Retry loop with exponential backoff to handle 429 Rate Limit and 503 Service Spikes
           resp = None
           for attempt in range(5):
@@ -113,7 +113,7 @@ custom_metrics:
       """
           api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
           client = Client(api_key=api_key)
-          
+
           # Retry loop with exponential backoff to handle 429 Rate Limit and 503 Service Spikes
           resp = None
           for attempt in range(5):

@@ -55,7 +55,7 @@ progressRingCircle.style.strokeDashoffset = circumference;
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
     fetchReleases(false);
-    
+
     // Search Events
     searchInput.addEventListener('input', handleSearch);
     clearSearchBtn.addEventListener('click', () => {
@@ -134,7 +134,7 @@ async function fetchReleases(force = false) {
         const url = `/api/releases${force ? '?force=true' : ''}`;
         const response = await fetch(url);
         const data = await response.json();
-        
+
         if (data.success) {
             allReleases = data.releases;
             updateSyncTime(data.last_updated);
@@ -196,7 +196,7 @@ function getShortDate(dateStr) {
 // Main rendering logic
 function renderFeed() {
     feedContainer.innerHTML = '';
-    
+
     if (allReleases.length === 0) {
         return;
     }
@@ -206,7 +206,7 @@ function renderFeed() {
         const dateGroup = document.createElement('div');
         dateGroup.className = 'date-group';
         dateGroup.setAttribute('data-date', release.date);
-        
+
         // Group Header
         const dateHeader = document.createElement('div');
         dateHeader.className = 'date-title';
@@ -220,18 +220,18 @@ function renderFeed() {
             </a>
         `;
         dateGroup.appendChild(dateHeader);
-        
+
         // Process each update block on this date
         let hasBlocks = false;
         release.blocks.forEach(block => {
             hasBlocks = true;
             const isSelected = selectedBlocks.some(b => b.id === block.id);
-            
+
             const card = document.createElement('div');
             card.className = `update-card ${isSelected ? 'selected' : ''}`;
             card.setAttribute('data-id', block.id);
             card.setAttribute('data-type', block.type);
-            
+
             // Add custom visual metadata
             card.innerHTML = `
                 <div class="card-header-row">
@@ -256,7 +256,7 @@ function renderFeed() {
                     </button>
                 </div>
             `;
-            
+
             // Card Click Handler (Select update)
             card.addEventListener('click', (e) => {
                 // If clicked on quick-tweet button, trigger separate handler
@@ -265,19 +265,19 @@ function renderFeed() {
                     tweetSingleBlock(release, block);
                     return;
                 }
-                
+
                 // If clicked link in card body, handle navigation normally
                 if (e.target.tagName === 'A' || e.target.closest('a')) {
                     e.stopPropagation();
                     return;
                 }
-                
+
                 toggleBlockSelection(release, block);
             });
-            
+
             dateGroup.appendChild(card);
         });
-        
+
         if (hasBlocks) {
             feedContainer.appendChild(dateGroup);
         }
@@ -288,25 +288,25 @@ function renderFeed() {
 function applyFilters() {
     let visibleCardsCount = 0;
     const dateGroups = feedContainer.querySelectorAll('.date-group');
-    
+
     dateGroups.forEach(group => {
         const cards = group.querySelectorAll('.update-card');
         let visibleCardsInGroup = 0;
-        
+
         cards.forEach(card => {
             const type = card.getAttribute('data-type').toLowerCase();
             const content = card.querySelector('.card-body').innerText.toLowerCase();
             const date = group.getAttribute('data-date').toLowerCase();
-            
+
             // Check type filter
             const matchesFilter = (currentFilter === 'all') || (type === currentFilter);
-            
+
             // Check search query
-            const matchesSearch = !searchQuery || 
-                                  content.includes(searchQuery) || 
+            const matchesSearch = !searchQuery ||
+                                  content.includes(searchQuery) ||
                                   type.includes(searchQuery) ||
                                   date.includes(searchQuery);
-            
+
             if (matchesFilter && matchesSearch) {
                 card.style.display = 'flex';
                 visibleCardsInGroup++;
@@ -315,7 +315,7 @@ function applyFilters() {
                 card.style.display = 'none';
             }
         });
-        
+
         // Hide date group if it contains no visible cards
         if (visibleCardsInGroup > 0) {
             group.style.display = 'flex';
@@ -323,13 +323,13 @@ function applyFilters() {
             group.style.display = 'none';
         }
     });
-    
+
     // Display feed or empty state
     if (visibleCardsCount > 0) {
         feedContainer.style.display = 'flex';
         emptyState.style.display = 'none';
-        showingCountEl.textContent = searchQuery || currentFilter !== 'all' 
-            ? `Showing ${visibleCardsCount} matching update(s)` 
+        showingCountEl.textContent = searchQuery || currentFilter !== 'all'
+            ? `Showing ${visibleCardsCount} matching update(s)`
             : `Showing all updates`;
     } else {
         feedContainer.style.display = 'none';
@@ -342,7 +342,7 @@ function applyFilters() {
 function toggleBlockSelection(release, block) {
     const index = selectedBlocks.findIndex(b => b.id === block.id);
     const card = feedContainer.querySelector(`.update-card[data-id="${block.id}"]`);
-    
+
     if (index === -1) {
         // Add to selection
         selectedBlocks.push({
@@ -358,7 +358,7 @@ function toggleBlockSelection(release, block) {
         selectedBlocks.splice(index, 1);
         if (card) card.classList.remove('selected');
     }
-    
+
     updateComposerUI();
 }
 
@@ -366,11 +366,11 @@ function toggleBlockSelection(release, block) {
 function selectAllVisible() {
     const visibleCards = feedContainer.querySelectorAll('.update-card:not([style*="display: none"])');
     if (visibleCards.length === 0) return;
-    
+
     visibleCards.forEach(card => {
         const blockId = card.getAttribute('data-id');
         const isAlreadySelected = selectedBlocks.some(b => b.id === blockId);
-        
+
         if (!isAlreadySelected) {
             // Find in raw data
             for (const release of allReleases) {
@@ -389,7 +389,7 @@ function selectAllVisible() {
             }
         }
     });
-    
+
     updateComposerUI();
     showToast(`Selected all ${visibleCards.length} visible updates`);
 }
@@ -399,19 +399,19 @@ function clearSelection() {
     selectedBlocks = [];
     const selectedCards = feedContainer.querySelectorAll('.update-card.selected');
     selectedCards.forEach(card => card.classList.remove('selected'));
-    
+
     updateComposerUI();
 }
 
 // Composer updates
 function updateComposerUI() {
     const count = selectedBlocks.length;
-    
+
     // Update Badges
     composerCountBadge.textContent = count;
     mobileComposerBadge.textContent = count;
     selectionBadgeCount.textContent = count;
-    
+
     if (count > 0) {
         clearSelectionBtn.style.display = 'inline-flex';
         mobileComposerTrigger.style.display = 'flex';
@@ -423,27 +423,27 @@ function updateComposerUI() {
             composerPane.classList.remove('active');
         }
     }
-    
+
     // Render Selected List Tags in Composer
     selectedListEl.innerHTML = '';
-    
+
     if (count === 0) {
         selectedListEl.innerHTML = '<p class="placeholder-text">No updates selected. Click checkboxes or select cards in the feed to draft a tweet.</p>';
     } else {
         selectedBlocks.forEach(block => {
             const tag = document.createElement('div');
             tag.className = 'selected-item-tag';
-            
+
             // Clean text representation
             const truncatedText = block.text.length > 40 ? block.text.substring(0, 40) + '...' : block.text;
-            
+
             tag.innerHTML = `
                 <span class="item-tag-text">
                     <strong>[${block.type}]</strong> ${truncatedText}
                 </span>
                 <button class="remove-tag-btn" title="Remove selection">&times;</button>
             `;
-            
+
             // Click to remove tag
             tag.querySelector('.remove-tag-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -456,11 +456,11 @@ function updateComposerUI() {
                     }
                 }
             });
-            
+
             selectedListEl.appendChild(tag);
         });
     }
-    
+
     // Regather drafted tweet contents
     generateTweetDraft();
 }
@@ -472,9 +472,9 @@ function generateTweetDraft() {
         updateCharCounter();
         return;
     }
-    
+
     let draftText = '';
-    
+
     if (activeTemplate === 'standard') {
         if (selectedBlocks.length === 1) {
             const b = selectedBlocks[0];
@@ -503,7 +503,7 @@ function generateTweetDraft() {
             draftText = `#BigQuery Release: ${selectedBlocks.length} updates detailed. Check details here: ${selectedBlocks[0].link}`;
         }
     }
-    
+
     tweetTextarea.value = draftText;
     updateCharCounter();
 }
@@ -518,9 +518,9 @@ function cleanTextForTweet(text) {
 function updateCharCounter() {
     const text = tweetTextarea.value;
     const len = text.length;
-    
+
     charCountEl.textContent = `${len} / 280`;
-    
+
     // Set colors & warning levels
     if (len > 280) {
         charCountEl.className = 'char-counter danger';
@@ -535,7 +535,7 @@ function updateCharCounter() {
         progressRing.className = 'progress-ring';
         setProgress(len / 280 * 100);
     }
-    
+
     // Enable/disable buttons based on input
     tweetBtn.disabled = len === 0;
     copyTweetBtn.disabled = len === 0;
@@ -551,7 +551,7 @@ function setProgress(percent) {
 function copyTweetToClipboard() {
     const text = tweetTextarea.value;
     if (!text) return;
-    
+
     navigator.clipboard.writeText(text).then(() => {
         showToast("Tweet draft copied to clipboard!");
     }).catch(err => {
@@ -565,7 +565,7 @@ function tweetSingleBlock(release, block) {
     const cleanText = cleanTextForTweet(block.content_text);
     const summaryText = cleanText.length > 180 ? cleanText.substring(0, 180) + '...' : cleanText;
     const tweetText = `BigQuery Update (${release.date}):\n\n[${block.type}] ${summaryText}\n\nRead details: ${release.link}`;
-    
+
     const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
     window.open(intentUrl, '_blank');
 }
@@ -574,7 +574,7 @@ function tweetSingleBlock(release, block) {
 function openTwitterIntent() {
     const text = tweetTextarea.value;
     if (!text) return;
-    
+
     const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
     window.open(intentUrl, '_blank');
 }

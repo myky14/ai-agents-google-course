@@ -168,7 +168,7 @@ def auto_approve(ctx: Context, node_input: dict):
         "method": "Auto-Approved",
         "expense": expense,
     }
-    
+
     msg = (
         f"⚡ **Auto-Approved**\n"
         f"Submitter: {expense.get('submitter')}\n"
@@ -178,7 +178,7 @@ def auto_approve(ctx: Context, node_input: dict):
         f"Date: {expense.get('date')}\n\n"
         f"Status: Approved instantly (amount is under ${APPROVAL_THRESHOLD:.2f})."
     )
-    
+
     yield Event(content=types.Content(role="model", parts=[types.Part.from_text(text=msg)]))
     yield Event(output=outcome)
 
@@ -186,16 +186,16 @@ def auto_approve(ctx: Context, node_input: dict):
 def scrub_pii(text: str) -> tuple[str, list[str]]:
     """Scrubs SSNs and Credit Cards from the text. Validates CC using Luhn."""
     redacted_categories = []
-    
+
     # 1. SSN Scrubbing
     # Matches XXX-XX-XXXX or raw 9 digits (XXXXXXXXX)
     ssn_pattern = r'\b\d{3}[- ]\d{2}[- ]\d{4}\b|\b\d{9}\b'
     scrubbed = text
-    
+
     if re.search(ssn_pattern, scrubbed):
         scrubbed = re.sub(ssn_pattern, "[REDACTED SSN]", scrubbed)
         redacted_categories.append("SSN")
-        
+
     # 2. Credit Card Scrubbing
     # Matches common digit sequences with optional hyphens/spaces
     # E.g. Visa/MC/Amex/Discover, total digit count 13-19
@@ -212,9 +212,9 @@ def scrub_pii(text: str) -> tuple[str, list[str]]:
 
     # Potential CCs: starts with a digit, followed by 12-18 digits with optional space/hyphen separators
     potential_cc_pattern = r'\b\d(?:[ -]?\d){12,18}\b'
-    
+
     cc_found = False
-    
+
     def cc_replacer(match):
         nonlocal cc_found
         matched_str = match.group(0)
@@ -222,11 +222,11 @@ def scrub_pii(text: str) -> tuple[str, list[str]]:
             cc_found = True
             return "[REDACTED CREDIT CARD]"
         return matched_str
-        
+
     scrubbed = re.sub(potential_cc_pattern, cc_replacer, scrubbed)
     if cc_found:
         redacted_categories.append("Credit Card")
-        
+
     return scrubbed, redacted_categories
 
 
@@ -253,7 +253,7 @@ def detect_prompt_injection(text: str) -> bool:
         "bypass threshold",
         "ignore threshold",
     ]
-    
+
     text_lower = text.lower()
     for keyword in injection_keywords:
         if keyword in text_lower:
@@ -265,11 +265,11 @@ def security_checkpoint(ctx: Context, node_input: dict) -> Event:
     """Security checkpoint that scrubs PII and checks for prompt injection."""
     expense = ctx.state.get("expense", node_input).copy()
     description = expense.get("description", "")
-    
+
     # 1. Scrub PII
     scrubbed_desc, redacted_categories = scrub_pii(description)
     expense["description"] = scrubbed_desc
-    
+
     # Re-generate the formatted expense so LLM prompts use the scrubbed version
     formatted = (
         f"Submitter: {expense.get('submitter', 'Unknown')}\n"
@@ -278,7 +278,7 @@ def security_checkpoint(ctx: Context, node_input: dict) -> Event:
         f"Description: {expense['description']}\n"
         f"Date: {expense.get('date', 'Unknown')}"
     )
-    
+
     # 2. Defend against prompt injection
     if detect_prompt_injection(description):
         # Flag as a security event and bypass risk reviewer LLM
@@ -287,7 +287,7 @@ def security_checkpoint(ctx: Context, node_input: dict) -> Event:
             "risk_factors": ["Security Flag: Prompt Injection Detected"],
             "explanation": "This expense was flagged by the security checkpoint due to a potential prompt injection attack in the description. The LLM reviewer was bypassed for security reasons."
         }
-        
+
         return Event(
             output=expense,
             route="flagged",
@@ -299,7 +299,7 @@ def security_checkpoint(ctx: Context, node_input: dict) -> Event:
                 "risk_review": risk_review
             }
         )
-        
+
     return Event(
         output=expense,
         route="clean",
@@ -318,9 +318,9 @@ risk_reviewer = Agent(
     instruction="""
     You are an AI risk assessor checking expense reports.
     Analyze the following expense details for potential policy violations, suspicious amounts, or other risk factors:
-    
+
     {formatted_expense}
-    
+
     Provide a structured risk review following the output schema.
     """,
     output_schema=RiskReview,
@@ -337,7 +337,7 @@ async def human_approval_gate(ctx: Context, node_input: dict | str | None = None
         risk_review = risk_review.model_dump()
 
     risk_factors_str = ", ".join(risk_review.get("risk_factors", [])) if isinstance(risk_review.get("risk_factors"), list) else str(risk_review.get("risk_factors", ""))
-    
+
     msg = (
         f"⚠️ **Action Required: Expense Review Alert**\n"
         f"An expense of **${expense.get('amount'):.2f}** submitted by **{expense.get('submitter')}** requires approval.\n"
@@ -378,10 +378,10 @@ def record_outcome(ctx: Context, node_input: dict):
     expense = ctx.state.get("expense", {})
     decision = ctx.state.get("human_decision", "Rejected")
     risk_review = ctx.state.get("risk_review", {})
-    
+
     is_approved = "approve" in str(decision).lower()
     status = "Approved" if is_approved else "Rejected"
-    
+
     outcome = {
         "status": status,
         "method": "Human Review",
@@ -389,13 +389,13 @@ def record_outcome(ctx: Context, node_input: dict):
         "risk_review": risk_review,
         "decision": decision
     }
-    
+
     msg = (
         f"✅ **Process Completed**\n"
         f"Expense submitted by **{expense.get('submitter')}** for **${expense.get('amount'):.2f}** has been **{status}** via Human Review.\n"
         f"Decision details: {decision}"
     )
-    
+
     yield Event(content=types.Content(role="model", parts=[types.Part.from_text(text=msg)]))
     yield Event(output=outcome)
 

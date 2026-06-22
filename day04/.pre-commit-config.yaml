@@ -1,0 +1,59 @@
+# .pre-commit-config.yaml — Day 04: AI Agents (shopping-assistant)
+#
+# This file lives at the day04/ git root so that day04 behaves as an
+# independent project repository with its own pre-commit hooks.
+#
+# To activate : pre-commit install          (run from day04/)
+# To run manually: pre-commit run --all-files
+# To skip semgrep once: SKIP=semgrep-security-scan git commit -m "..."
+
+repos:
+  - repo: local
+    hooks:
+
+      # -----------------------------------------------------------------------
+      # 1. End-of-file fixer
+      #    Ensures every text file ends with exactly one newline character.
+      # -----------------------------------------------------------------------
+      - id: end-of-file-fixer
+        name: "Fix end of files"
+        entry: end-of-file-fixer
+        language: python
+        additional_dependencies: ["pre-commit-hooks==4.6.0"]
+        types: [text]
+
+      # -----------------------------------------------------------------------
+      # 2. Trailing-whitespace trimmer
+      #    Strips trailing spaces/tabs from every line in text files.
+      # -----------------------------------------------------------------------
+      - id: trailing-whitespace
+        name: "Trim trailing whitespace"
+        entry: trailing-whitespace-fixer
+        language: python
+        additional_dependencies: ["pre-commit-hooks==4.6.0"]
+        types: [text]
+
+      # -----------------------------------------------------------------------
+      # 3. Semgrep security gate — hardcoded credentials
+      #    Scans staged Python files against our custom rules.
+      #    --error : exits non-zero (blocks commit) on any finding.
+      #    --config path is now relative to the day04/ git root.
+      #
+      #    NOTE: The semgrep pip package requires the native osemgrep binary,
+      #    which is not bundled in the Windows pip wheel. This hook runs
+      #    correctly on Linux/macOS, WSL2, and CI runners (GitHub Actions /
+      #    Google Cloud Build). On those platforms it will block commits that
+      #    contain secrets such as the AIzaSy... demo key in app/agent.py.
+      # -----------------------------------------------------------------------
+      - id: semgrep-security-scan
+        name: "Semgrep — detect hardcoded secrets (Python)"
+        entry: semgrep
+        args:
+          - --config
+          - day04/shopping-assistant/.semgrep/rules.yaml
+          - --error
+          - --no-rewrite-rule-ids
+        language: python
+        additional_dependencies: ["semgrep>=1.75.0"]
+        types: [python]
+        pass_filenames: true

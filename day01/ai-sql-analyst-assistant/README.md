@@ -18,7 +18,7 @@ https://ai-sql-analyst-assistant-567449380471.asia-southeast1.run.app
 
 ## Project Overview
 
-In many organizations, extracting data insights requires database technical knowledge (SQL) or relying on busy data teams, creating operational bottlenecks. The **AI SQL Analyst Assistant** was built to solve this problem by democratizing data access. 
+In many organizations, extracting data insights requires database technical knowledge (SQL) or relying on busy data teams, creating operational bottlenecks. The **AI SQL Analyst Assistant** was built to solve this problem by democratizing data access.
 
 *   **What it does:** It acts as a virtual business intelligence analyst. Users input their database schema and ask a question in plain language; the assistant generates correct, ready-to-run SQL and maps the results to an interactive dashboard preview.
 *   **Why it was built:** To demonstrate the practical deployment of structured AI model outputs for real-world analytical automation.

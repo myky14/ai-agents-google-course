@@ -20,4 +20,3 @@ generate-traces:
 
 grade:
 	uvx google-agents-cli eval grade --traces artifacts/traces/generated_traces.json --config tests/eval/eval_config.yaml
-

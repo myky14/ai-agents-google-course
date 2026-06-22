@@ -262,9 +262,9 @@ export default function InteractiveChart({ visualization }: ChartProps) {
 
     // Path for the filled area (stretching to the bottom baseline)
     const areaPath = `
-      ${linePath} 
-      L ${valPoints[valPoints.length - 1].x} ${height - paddingY} 
-      L ${valPoints[0].x} ${height - paddingY} 
+      ${linePath}
+      L ${valPoints[valPoints.length - 1].x} ${height - paddingY}
+      L ${valPoints[0].x} ${height - paddingY}
       Z
     `;
 
