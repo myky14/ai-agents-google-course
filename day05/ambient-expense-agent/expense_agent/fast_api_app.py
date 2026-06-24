@@ -14,8 +14,7 @@
 import os
 import json
 import logging
-from fastapi import FastAPI, Request
-from starlette.middleware.base import BaseHTTPMiddleware
+from fastapi import FastAPI
 from google.adk.cli.fast_api import get_fast_api_app
 
 from expense_agent.app_utils.telemetry import setup_telemetry

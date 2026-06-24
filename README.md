@@ -4,8 +4,8 @@
 > **Program:** Google / Kaggle 5-Day Gen AI Intensive Course 2026
 > **Focus:** AI Agent Engineering · Security · Human-in-the-Loop · Evaluation
 
-[![Days Completed](https://img.shields.io/badge/Days%20Completed-4%20of%205-blue)](#learning-journey)
-[![Status](https://img.shields.io/badge/Status-4%20of%205%20Days%20Completed-brightgreen)](#learning-journey)
+[![Days Completed](https://img.shields.io/badge/Days%20Completed-5%20of%205-blue)](#learning-journey)
+[![Status](https://img.shields.io/badge/Status-5%20of%205%20Days%20Completed-brightgreen)](#learning-journey)
 [![Platform](https://img.shields.io/badge/Platform-Google%20ADK%202.0-orange)](#key-skills-practiced)
 
 ---
@@ -44,7 +44,7 @@ Over five days, the course progresses from foundational LLM integration through 
 | **02** | Agent Tools & Interoperability (MCP) | BigQuery Release Notes Tracker | ✅ Completed |
 | **03** | ADK Agent Workflows & Human-in-the-Loop | Customer Support Agent (Graph) | ✅ Completed |
 | **04** | Agent Security, Evaluation & Secure Coding Gates | Ambient Expense Agent + Secure Shopping Assistant | ✅ Completed |
-| **05** | Multi-Agent Systems & Deployment | *(Coming Soon)* | ⏳ Upcoming |
+| **05** | Multi-Agent Systems & Deployment | Ambient Expense Agent (Production) | ✅ Completed |
 
 ---
 
@@ -69,7 +69,10 @@ AI_Agents_5_Day_Google/
 │   ├── threat_model.md              # STRIDE security assessment
 │   ├── screenshots/                 # Visual walkthroughs (17 screenshots)
 │   └── README.md
-├── day05/                           # Day 05: (Coming Soon)
+├── day05/                           # Day 05: Multi-Agent Systems & Deployment
+│   ├── ambient-expense-agent/       # Production-ready agent with fastapi/agent_runtime
+│   ├── screenshots/                 # Playground and dashboard execution screenshots
+│   └── README.md                    # Capstone project report
 ├── capstone/                        # Capstone project workspace
 └── notes/                           # Course notes and scratchpads
 ```
@@ -141,7 +144,22 @@ A retail assistant with a full secure development pipeline:
 - **STRIDE Threat Model**: A local `threat_model.md` was generated covering all six STRIDE pillars.
 - **TDD Security Test Suite**: Outcome-based pytest tests verified all security boundaries for the discount redemption tool.
 
-**Takeaway**: Local commit hooks and agent hooks are a good first line of defense, but not sufficient on their own — identical gates must be enforced in CI/CD pipelines, since local hooks can be bypassed with `--no-verify`.
+- **Takeaway**: Local commit hooks and agent hooks are a good first line of defense, but not sufficient on their own — identical gates must be enforced in CI/CD pipelines, since local hooks can be bypassed with `--no-verify`.
+
+---
+
+### Day 05 — Ambient Expense Agent (Multi-Agent Systems & Deployment)
+**Project Workspace:** [`day05/ambient-expense-agent`](day05/ambient-expense-agent/) | **[Detailed Project Report →](day05/README.md)** | **[Sub-project README →](day05/ambient-expense-agent/README.md)**
+
+Implemented a production-ready, security-first **Ambient Expense Agent** and deployed it to the managed **Google Vertex AI Agent Runtime** (Reasoning Engines). The system integrates an event-driven ingestion pipeline via Pub/Sub, automated risk scoring, and a web-based dashboard on Cloud Run.
+
+**Summary:**
+* Built and deployed an Ambient Expense Agent using Google ADK.
+* Implemented security review and HITL approval workflow.
+* Deployed Manager Dashboard on Cloud Run.
+* Integrated Pub/Sub event-driven architecture.
+* Connected Agent Runtime, Session Service, and Dashboard.
+* Completed end-to-end approval and rejection testing.
 
 ---
 
@@ -155,6 +173,7 @@ Visual walkthroughs and detailed notes are available in each day's dedicated REA
 | Day 02 | [`day02/README.md`](day02/README.md) |
 | Day 03 | [`day03/README.md`](day03/README.md) |
 | Day 04 | [`day04/README.md`](day04/README.md) — 17 screenshots covering setup through secure commit |
+| Day 05 | [`day05/README.md`](day05/README.md) — 6 screenshots covering playground to production dashboard |
 
 ---
 
@@ -179,7 +198,7 @@ Version control, code linting, static analysis, test coverage, and structured lo
 
 ## 🚀 Future Work
 
-- [ ] **Complete Day 05** — Multi-Agent Systems & Deployment
+- [x] **Complete Day 05** — Multi-Agent Systems & Deployment
 - [ ] **CI/CD Security Pipeline** — Add GitHub Actions with Semgrep to enforce the same gates that currently run only as local pre-commit hooks
 - [ ] **Cloud Run Deployment** — Deploy production-ready agents with proper IAM roles and Secret Manager for credential handling
 - [ ] **Adversarial Evaluation Suite** — Extend security test coverage to 50+ adversarial scenarios, covering the logic-ordering vulnerability identified in Day 04

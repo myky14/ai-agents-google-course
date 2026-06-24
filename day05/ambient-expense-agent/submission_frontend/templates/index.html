@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Manager Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Glassmorphism Styles -->
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="bg-radial">
+
+    <!-- Ambient glowing backgrounds -->
+    <div class="glow glow-purple"></div>
+    <div class="glow glow-blue"></div>
+
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="glass-panel header-panel">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-receipt"></i>
+                </div>
+                <div>
+                    <h1>ExpenseControl</h1>
+                    <p class="subtitle">Agent Platform Manager Hub</p>
+                </div>
+            </div>
+            <div class="status-badge-container">
+                <span class="status-indicator online"></span>
+                <span class="status-text">Agent Runtime Active</span>
+            </div>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-grid">
+            <div class="glass-panel stat-card">
+                <div class="stat-icon purple">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-value" id="stats-pending">0</span>
+                    <span class="stat-label">Pending Reviews</span>
+                </div>
+            </div>
+            <div class="glass-panel stat-card">
+                <div class="stat-icon blue">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-value">100%</span>
+                    <span class="stat-label">Secured Transactions</span>
+                </div>
+            </div>
+            <div class="glass-panel stat-card">
+                <div class="stat-icon green">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-value">Auto</span>
+                    <span class="stat-label">&lt;$100 Approved</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-list-check"></i> Pending Expense Approvals</h2>
+                <button class="btn btn-secondary btn-icon" id="refresh-btn">
+                    <i class="fa-solid fa-arrows-rotate"></i> Refresh
+                </button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading-state" class="loading-state glass-panel">
+                <div class="spinner"></div>
+                <p>Retrieving active agent sessions...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state glass-panel hidden">
+                <div class="empty-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3>All Clear!</h3>
+                <p>No expense claims are currently awaiting human-in-the-loop decisions.</p>
+            </div>
+
+            <!-- Card Grid -->
+            <div id="pending-grid" class="card-grid hidden">
+                <!-- Cards injected dynamically -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Details/Audit Modal -->
+    <div id="details-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-circle-info"></i> Session & Audit Log Details</h3>
+                <button class="modal-close" id="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="meta-section">
+                    <p><strong>Session ID:</strong> <span id="modal-session-id" class="code-font"></span></p>
+                    <p><strong>User ID:</strong> <span id="modal-user-id"></span></p>
+                    <p><strong>Last Activity:</strong> <span id="modal-time"></span></p>
+                </div>
+
+                <h4 class="sub-heading">Parsed Claims State</h4>
+                <div class="state-preview-box code-font" id="modal-state-json"></div>
+
+                <h4 class="sub-heading">Agent Runtime Events Path</h4>
+                <div class="event-timeline" id="modal-timeline">
+                    <!-- Events list injected dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Javascript -->
+    <script src="/static/app.js"></script>
+</body>
+</html>

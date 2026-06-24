@@ -1,138 +1,129 @@
-# Google & Kaggle AI Agents Intensive Course 2026
-## Day 5: Production Deployment & Agent Runtime — Ambient Expense Agent
+# Ambient Expense Agent — Production-Grade Event-Driven Workflow
+## Day 5 Capstone Project Report
 
-This repository contains the production-grade implementation of the **Ambient Expense Agent** built during Day 5 of the Google/Kaggle AI Agents Intensive Course. The project implements an automated, security-first expense claim processing agent deployed to the managed **Google Vertex AI Agent Runtime (Reasoning Engines)**.
-
----
-
-## 1. Overview
-
-The **Ambient Expense Agent** is designed to process and audit employee expense claims automatically. Operating under a security-first design, it parses incoming expense requests, scans for security vulnerabilities (e.g., prompt injections, malicious payloads, and PII leaks), assesses policy compliance, auto-approves low-risk claims under $100, and routes high-value or suspicious claims to a human reviewer.
-
-This agent is built using the **Google Agent Development Kit (ADK)** framework and runs on **Vertex AI Agent Runtime**, enabling fully managed serverless scalability, automatic registry visibility, and seamless Human-in-the-Loop (HITL) execution.
+This project implements a security-first, event-driven, and fully automated **Ambient Expense Agent** for parsing, auditing, and routing employee expense claims. Deployed to the managed **Google Vertex AI Agent Runtime**, this agent seamlessly integrates automated policy validation, threat mitigations, and asynchronous **Human-in-the-Loop (HITL) approvals**.
 
 ---
 
-## 2. Architecture
+## Overview
 
-The system utilizes an event-driven, graph-based routing architecture. The agent's workflow transitions from raw input extraction to security sanitization, and then to either auto-approval or human audit.
+Modern organizations require automated workflows to process operational requests quickly while maintaining strict financial and security boundaries. The **Ambient Expense Agent** acts as an autonomous auditor, built using the **Google Agent Development Kit (ADK)**.
 
-```
-                                    +----------------------+
-                                    |  User Expense Input  |
-                                    +-----------+----------=
-                                                |
-                                                v
-                                    +-----------+----------+
-                                    |    parse_expense     |
-                                    +-----------+----------+
-                                                | (always)
-                                                v
-                                    +-----------+----------+
-                                    |  security_checkpoint |
-                                    +-----+-----------+----+
-                                          |           |
-                        [Clean & < $100]  |           | [Clean & >= $100] OR [Flagged/Suspicious]
-                                          |           |
-                                          |           +-----------------------+
-                                          v                                   v
-                                  +-------+--------+                 +--------+-------+
-                                  |  auto_approve  |                 | risk_reviewer  |
-                                  +-------+--------+                 +--------+-------+
-                                          |                                   |
-                                          |                                   v
-                                          |                          +--------+-------+
-                                          |                          |  emit_alert    |
-                                          |                          +--------+-------+
-                                          |                                   |
-                                          |                                   v
-                                          |                          +--------+-------+
-                                          |                          |  human_gate    |
-                                          |                          +--------+-------+
-                                          |                                   |
-                                          |                                   v
-                                          +----------------> [End] <----------+
-```
+The system implements a tiered review process:
+1. **Low-Value Auto-Approval**: Clean claims under $100 are automatically approved.
+2. **High-Value Escalation**: Claims of $100 or more are evaluated for risks by an AI agent and routed to a manager for manual approval.
+3. **Security Interception**: Malicious payloads or prompt injection attacks are caught, sanitized, and immediately routed to a human reviewer to prevent automated exploit execution.
 
 ---
 
-## 3. Workflow Diagram (ASCII)
+## Architecture
 
-Below is the structured state transition path implemented in `expense_agent/agent.py`:
+The system utilizes an asynchronous, event-driven, graph-based routing architecture that bridges message queues, ML inference engines, and web applications.
 
-```text
-Claim Input
-    |
-    v
-[parse_expense] ──(needs_review)──> [security_checkpoint]
-                                             │
-                       ┌─────────────────────┼─────────────────────┐
-                       │ (Clean & < $100)    │ (Clean & >= $100)   │ (Flagged / Injection)
-                       v                     v                     v
-                [auto_approve]        [risk_reviewer]     [human_approval_gate]
-                       │                     │                     │
-                       │                     v                     │
-                       │            [emit_expense_alert]           │
-                       │                     │                     │
-                       │                     v                     │
-                       └─────────────> [human_approval_gate] <─────┘
-                                             │
-                                             v
-                                        Final Decision
+### End-to-End Flow Diagram
+```mermaid
+graph TD
+    classDef source fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    classDef agent fill:#ede7f6,stroke:#5e35b1,stroke-width:2px;
+    classDef hitl fill:#efebe9,stroke:#5d4037,stroke-width:2px;
+
+    %% Event Source Layer
+    EP["Expense Publisher"] -->|Publish JSON| PST["Pub/Sub Topic"]
+    PST -->|HTTP POST Webhook| PSPS["Pub/Sub Push Subscription"]
+
+    %% Agent Runtime Layer
+    subgraph Agent Runtime [Vertex AI Reasoning Engine]
+        PSPS -->|Invoke| PE["parse_expense Node"]
+        PE -->|Route: needs_review| SC["security_checkpoint Node"]
+
+        SC -->|Clean & < $100| AA["auto_approve Node"]
+        SC -->|Clean & >= $100| RR["risk_reviewer Agent Node"]
+        SC -->|Flagged / Injection| HAG["human_approval_gate Node"]
+
+        RR -->|Structured Risk Analysis| EEA["emit_expense_alert Node"]
+        EEA -->|Emit Alert Event| HAG
+
+        HAG -->|Stateful Interrupt| RO["record_outcome Node"]
+        AA -->|Complete Workflow| RO
+    end
+
+    %% Human-in-the-Loop Layer
+    subgraph HITL System [Human-in-the-Loop]
+        HAG -->|Register RequestInput| SS["Vertex AI Session Service"]
+        SS -->|Query Sessions| CR["Cloud Run Manager Dashboard"]
+        CR -->|Submit Decision: Approve/Reject| AR["Agent Resume"]
+        AR -->|Resume Stream Payload| HAG
+    end
+
+    class EP,PST,PSPS source;
+    class PE,SC,AA,RR,EEA,HAG,RO agent;
+    class SS,CR,AR hitl;
 ```
 
----
-
-## 4. Key Features
-
-*   **Automated Parsing**: Uses LLMs to reliably extract structured fields (Amount, Submitter, Category, Description, Date) from free-form natural language inputs.
-*   **Security Sanitization**: Prompt injection detection and PII checks occur on all transactions.
-*   **Tiered Authorization Limits**: Under $100 claims are processed immediately, while claims of $100 or greater require human review.
-*   **Human-in-the-Loop (HITL) Interruption**: Utilizes ADK's `RequestInput` mechanism (`adk_request_input`) to halt execution statefully, prompt the reviewer, and resume based on the decision.
-*   **Warning Interface Cards**: Explicitly fires user-visible warnings using `ctx.write_event` prior to halting, improving visual feedback in client applications.
-*   **Managed Serverless Runtime**: Deployed directly to Vertex AI Agent Runtime (Reasoning Engines) for auto-scaling and zero idle cost.
-
----
-
-## 5. Security Improvements
-
-In initial designs, low-value expenses (< $100) bypassed the security checkpoint and went directly to auto-approval, leaving the system vulnerable to prompt-injection exploits designed to force approval or leak data.
-
-We refactored the workflow to follow a **security-first** pattern:
-1.  **Mandatory Security Scans**: Every claim is routed through `security_checkpoint` before any routing decision is made.
-2.  **Prompt Injection Guard**: Detects adversarial inputs (e.g., instructions attempting to override the $100 limit) and forces routing to the `human_approval_gate` with a flagged security status.
-3.  **Sanitization Check**: Validates and logs clean/unsafe metrics prior to deciding on approval paths.
+### Flow Sequence
+1. **Expense Publisher**: Publishes an expense payload (base64-encoded or raw JSON).
+2. **Pub/Sub Topic**: Ingests and propagates the expense event.
+3. **Pub/Sub Push Subscription**: Delivers the message via HTTP POST to the agent's web endpoint.
+4. **Agent Runtime**: Normalizes the payload and initiates the ADK workflow graph.
+5. **Session Service**: Persists execution state and tracks active interrupts.
+6. **Cloud Run Dashboard**: Managers inspect pending requests and session histories.
+7. **Manager Decision**: The manager approves or rejects the claim via the UI.
+8. **Agent Resume**: The dashboard resumes the execution thread statefully via Vertex AI.
 
 ---
 
-## 6. Deployment Process
+## Key Features
 
-The deployment is packaged and uploaded using the Google `agents-cli` pipeline:
-
-1.  **Configure Project and Region**:
-    ```bash
-    gcloud config set project ai-agents-course-499804
-    gcloud config set compute/region us-east1
-    ```
-2.  **Execute Deployment**:
-    ```bash
-    agents-cli deploy --project=ai-agents-course-499804 --region=us-east1 --no-confirm-project
-    ```
-3.  **Deployment Staging**: The CLI packages the source packages as an in-memory tarball, auto-generates requirements, uploads the bundle to Google Cloud storage, and updates the managed Vertex AI Reasoning Engine.
+* **Event-Driven Integration**: Normalizes incoming Pub/Sub push payloads dynamically into unified internal representations.
+* **Tiered Dollar Limits**: Processes claims under $100 immediately while routing larger amounts to managers.
+* **Interactive Event Streaming**: Uses `ctx.write_event` to emit structured cards and risk notifications directly into the streaming logs.
+* **Stateful Interrupts**: Employs ADK's native `RequestInput` (`adk_request_input`) to halt execution statefully, awaiting a manager response without maintaining an external database.
+* **Managed Serverless Deployments**: Built on Google Cloud Run and Vertex AI Agent Runtime to scale dynamically from zero.
 
 ---
 
-## 7. Production Validation
+## Security Enhancements
 
-Validation of the deployed agent was conducted by running remote queries against the Vertex AI endpoint:
+Initial prototypes bypassed security scans for low-value expenses to optimize performance. However, this left a vulnerability where malicious inputs (e.g., prompt injections trying to force auto-approval or leak environment variables) could bypass checks entirely.
 
-*   **Low-Value Request (< $100)**: Clean $50 claims correctly run through `security_checkpoint` and transition directly to `Auto-Approved`.
-*   **High-Value Request (>= $100)**: Clean $150 claims pass `security_checkpoint`, invoke the `risk_reviewer` using `gemini-2.5-flash`, emit the warning alert card, and yield control to the human reviewer.
-*   **Injection Attempt**: Suspicious inputs trigger an immediate flag and route directly to the human reviewer for rejection.
+We implemented a **Security-First Paradigm** to eliminate these risks:
+* **Mandatory Pre-Routing Security Scan**: Every expense claim runs through the `security_checkpoint` node *before* any routing or financial threshold decision takes place.
+* **Prompt Injection Defenses**: The input is scanned against instruction-override heuristics. Flagged claims bypass LLM processing entirely and route straight to `human_approval_gate` to prevent jailbreak exploits.
+* **PII Redaction**: SSN patterns and Credit Cards (validated via the Luhn checksum algorithm) are dynamically masked (`[REDACTED SSN]`, `[REDACTED CREDIT CARD]`) before being processed by LLMs.
+* **Pub/Sub Safety Wrappers**: The `process_expense` and `query` methods inside [agent_runtime_app.py](file:///f:/Studyspace/AI_Agents_5_Day_Google/day05/ambient-expense-agent/expense_agent/agent_runtime_app.py) validate inputs and ensure that attackers cannot manipulate payload properties or bypass security gates.
 
 ---
 
-## 8. Agent Runtime Deployment Details
+## Human-in-the-Loop Approval Workflow
+
+The human approval workflow uses ADK's stateful pausing mechanisms:
+1. When a claim requires human review (amount $\ge \$100$ or flagged by the security checkpoint), the `human_approval_gate` node yields a `RequestInput(interrupt_id="human_decision")`.
+2. The agent pauses execution, preserving the conversation history and state variables.
+3. Once the manager submits a decision on the dashboard, the system invokes `agent.async_stream_query` (or `streamQuery`) to deliver the decision text (`"approve"` or `"reject"`).
+4. The agent reads the input from `ctx.resume_inputs`, routes the flow to `record_outcome`, and completes the transaction.
+
+---
+
+## Manager Dashboard (Cloud Run)
+
+The **Manager Expense Approval Dashboard** is a FastAPI service designed to run on **Google Cloud Run**. It connects directly to the **Vertex AI Session Service** to manage pending tasks:
+* **Session Discovery**: Queries the Session Service using `list_sessions` and `get_session` to identify executions waiting for the `human_decision` interrupt.
+* **Details Viewer**: Displays the parsed expense fields, redacted categories, and structured AI risk reports (risk scores and explanations).
+* **Resume Operations**: Resumes the workflow by posting the manager's decision back to the agent runtime.
+
+---
+
+## Pub/Sub Event Pipeline
+
+The ingestion pipeline handles raw messages in standard Pub/Sub envelope structures:
+* **Normalization Middleware**: Intercepts webhook requests at `/trigger/pubsub`, normalizes subscription naming, and extracts base64 payloads safely.
+* **Seamless Direct Queries**: The endpoint maps to the Reasoning Engine's `:query` and `process_expense` operations, allowing standard HTTP requests to trigger the identical workflow.
+
+---
+
+## Agent Runtime Deployment
+
+The agent is registered with the **Gemini Enterprise Agent Registry** and deployed as a managed Vertex AI Reasoning Engine:
 
 | Parameter | Deployed Value |
 | :--- | :--- |
@@ -145,38 +136,15 @@ Validation of the deployed agent was conducted by running remote queries against
 
 ---
 
-## 9. Agent Registry Verification
+## End-to-End Testing
 
-The agent automatically registers with the **Gemini Enterprise Agent Registry** on deployment. This was verified by inspecting the fleet registry endpoint:
-
-```json
-{
-  "name": "projects/ai-agents-course-499804/locations/us-east1/agents/agentregistry-00000000-0000-0000-f305-3625bf3f23c4",
-  "agentId": "urn:agent:projects-172600545145:projects:172600545145:locations:us-east1:aiplatform:reasoningEngines:5300842314531340288",
-  "displayName": "ambient-expense-agent",
-  "protocols": [
-    {
-      "type": "CUSTOM",
-      "interfaces": [
-        { "url": "https://us-east1-aiplatform.googleapis.com/v1/.../reasoningEngines/5300842314531340288:query" },
-        { "url": "https://us-east1-aiplatform.googleapis.com/v1/.../reasoningEngines/5300842314531340288:streamQuery" }
-      ]
-    }
-  ]
-}
-```
-
----
-
-## 10. Testing Results
-
-An extensive unit and integration test suite verifies the updated routing configurations, security checks, and node integrations.
+A robust test suite verifies the security checks, workflow routing, and dashboard operations.
 
 ```bash
 uv run pytest
 ```
 
-Output:
+### Test Coverage Results
 ```text
 ============================= test session starts =============================
 collected 21 items
@@ -191,26 +159,46 @@ tests\unit\test_security.py ..............                               [100%]
 
 ---
 
-## 11. Screenshots
+## Screenshots
 
-Here is the visual validation of the two primary routing cases in the Vertex AI Agent Engine Playground:
+The following screenshots illustrate the system components and verified execution states:
 
-### Two Test Cases (Auto-Approval vs. Human Review Alert)
-![Two Test Cases](screenshots/two-test-cases.png)
-*(Placeholder: Upload screenshot showing (1) Auto-approval for clean <$100 claim, (2) Emitted Warning Card & human decision input prompt for >=$100 claim.)*
+### 1. General Playground Comparison (Auto-Approval vs. Human Review Alert)
+![Two Test Cases](file:///f:/Studyspace/AI_Agents_5_Day_Google/day05/screenshots/two-test-cases.png)
+*Figure 1: Comparison between an auto-approved low-value claim (< $100) and an escalated high-value claim emitting a warning card and awaiting manager decision.*
+
+### 2. Cloud Run Manager Dashboard
+![Cloud Run Dashboard](file:///f:/Studyspace/AI_Agents_5_Day_Google/day05/screenshots/cloud-run-dashboard.png)
+*Figure 2: The Manager Approval Dashboard web interface showing pending claims.*
+
+### 3. Dashboard Session Details (Alice's Pending Expense Claim)
+![Dashboard with Alice](file:///f:/Studyspace/AI_Agents_5_Day_Google/day05/screenshots/dashboard-with-alice.png)
+*Figure 3: Details screen showing Alice's pending claim with extracted amount, category, and AI-generated risk review.*
+
+### 4. Attacker Session Pending Review (Prompt Injection Intercepted)
+![Attacker Pending Review](file:///f:/Studyspace/AI_Agents_5_Day_Google/day05/screenshots/attacker-pending-review.png)
+*Figure 4: A prompt injection attempt is successfully flagged by the security checkpoint, bypassing LLM assessment and routing directly to the human reviewer.*
+
+### 5. Playground Approved Session
+![Playground Approved Session](file:///f:/Studyspace/AI_Agents_5_Day_Google/day05/screenshots/playground-approved-session.png)
+*Figure 5: Playground execution demonstrating a resumed workflow state successfully transition to Approved after human response.*
+
+### 6. Playground Rejected Session
+![Playground Rejected Session](file:///f:/Studyspace/AI_Agents_5_Day_Google/day05/screenshots/playground-rejected-session.png)
+*Figure 6: Playground execution showing the final Rejected output state once a negative review decision is processed.*
 
 ---
 
-## 12. Lessons Learned
+## Lessons Learned
 
-*   **Fail-Secure Topology**: Avoid routing shortcuts for low-value transactions. Bypassing security checks to reduce execution costs leaves the system vulnerable to prompt-injection attacks. Security scanning must always be the entry point.
-*   **Vertex AI Model Availability**: The default SDK template configured `gemini-3.1-flash-lite`, which is not available in the `us-east1` region for Vertex AI Reasoning Engines. Changing the model to `gemini-2.5-flash` resolved 404 deployment errors.
-*   **Stateful Interrupts**: ADK's `adk_request_input` enables clean execution pausing, allowing developers to implement Human-in-the-Loop patterns easily without maintaining external state databases.
+* **Fail-Secure Defaults**: Security checks must always represent the entry gate of a processing pipeline. Separating logic paths before cleaning data allows adversaries to bypass controls by injecting instructions into variables.
+* **Stateful Interrupt Optimization**: ADK's `RequestInput` eliminates complex database logic for stateful workflows, making it simple to write applications that interact with human reviews.
+* **Reasoning Engine Alignment**: In Reasoning Engine environments, ensuring the selected model (e.g., `gemini-2.5-flash`) is fully supported in the target GCP region (`us-east1`) is critical to avoid deployment errors.
 
 ---
 
-## 13. Future Improvements
+## Future Improvements
 
-*   **LLM-Based Security Check**: Replace regex-based prompt-injection heuristics in the security checkpoint with a specialized GenAI classifier or Google Cloud Web Risk API integration.
-*   **Multi-Level Thresholds**: Implement tiered human review (e.g., manager approval for claims $\ge \$100$ and director approval for claims $\ge \$1000$).
-*   **Persistent Storage Integration**: Swap `InMemorySessionService` with `VertexAiSessionService` to persist pending human decisions across application restarts.
+* **GenAI-Based Security Analysis**: Replace regex heuristics with a specialized Gemini classifier node or Web Risk API integration to capture sophisticated semantic prompt injections.
+* **Tiered Approval Limits**: Implement multi-level approval thresholds (e.g., manager approval for $\$100-\$1000$, and executive approval for claims $>\$1000$).
+* **Dynamic Budgeting**: Integrate with enterprise ERP tools to dynamically cross-reference expense submissions against department budget balances.
